@@ -76,7 +76,7 @@ fun DrawerWithBlurEffect() {
             }
         })
 
-        // If the drawer is open, display the drawer with a blur effect behind it
+        // If the drawer is open, display the drawer with blur effect behind it
         if (isDrawerOpen) {
             Row(modifier = Modifier.fillMaxSize()) {
 
