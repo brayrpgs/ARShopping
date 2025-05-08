@@ -95,25 +95,6 @@ fun Providers() {
             }
 
         )
-        FilledIconButton(
-            colors = IconButtonDefaults.filledIconButtonColors(
-                containerColor = Color.Transparent
-            ),
-            onClick = {},
-            modifier = Modifier
-                .width(53.dp)
-                .height(53.dp),
-            content = {
-                Icon(
-                    painter = painterResource(id = R.drawable.apleicon),
-                    contentDescription = "apple",
-                    tint = Color.Unspecified,
-                    modifier = Modifier
-                        .width(53.dp)
-                        .height(53.dp),
-                )
-            }
 
-        )
     }
 }

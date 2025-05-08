@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -29,8 +30,10 @@ fun TextInput(
     modifier: Modifier = Modifier,
     label: String,
     placeholder: String,
-    isPassword: Boolean = false
+    isPassword: Boolean = false,
+    backgroundColor : Brush
 ) {
+    val color = if (backgroundColor == styles.colorDarkBackground) Color.White else Color.Black
     var text by remember { mutableStateOf("") }
 
     Box(modifier = modifier) {
@@ -42,17 +45,22 @@ fun TextInput(
                     text = label,
                     fontFamily = styles.fontFamily,
                     fontSize = 10.sp,
-                    color = Color.Black
+                    color = color
                 )
             },
             shape = RoundedCornerShape(size = 25.dp),
             placeholder = {
-                Text(placeholder, textAlign = TextAlign.Center)
+                Text(
+                    text = placeholder,
+                    textAlign = TextAlign.Center,
+                    color = Color.Gray,
+                    fontFamily = styles.fontFamily
+                )
             },
             textStyle = TextStyle(
                 fontFamily = styles.fontFamily,
                 fontSize = 20.sp,
-                color = Color.Black,
+                color = color,
             ),
             singleLine = true,
             visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,

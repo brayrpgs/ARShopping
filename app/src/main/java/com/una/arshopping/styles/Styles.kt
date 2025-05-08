@@ -20,13 +20,22 @@ data class Styles(
         start = Offset(0f, 0f),
         end = Offset(0f, 1000f)
     ),
-    val provider : GoogleFont.Provider = GoogleFont.Provider(
+    val colorDarkBackground: Brush = Brush.linearGradient(
+        colors = listOf(
+            Color(0xFFA29D9D),
+            Color(0xFF000000),
+            Color(0xFF000000)
+        ),
+        start = Offset(0f, 0f),
+        end = Offset(0f, 1000f)
+    ),
+    val provider: GoogleFont.Provider = GoogleFont.Provider(
         providerAuthority = "com.google.android.gms.fonts",
         providerPackage = "com.google.android.gms",
         certificates = R.array.com_google_android_gms_fonts_certs
     ),
-    val fontName : GoogleFont = GoogleFont("JetBrains Mono"),
-    val fontFamily : FontFamily = FontFamily(
+    val fontName: GoogleFont = GoogleFont("JetBrains Mono"),
+    val fontFamily: FontFamily = FontFamily(
         Font(
             googleFont = fontName,
             fontProvider = provider,

@@ -11,20 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.una.arshopping.styles.Styles
 
 @Composable
-fun Label(styles: Styles, text: String) {
+fun Label(styles: Styles, text: String, backgroundColor: Brush) {
+    val color = if (backgroundColor == styles.colorDarkBackground) Color.White else Color.Black
     Box(
         modifier = Modifier
-            .shadow(
-                elevation = 2.dp,
-                spotColor = Color(0x40000000),
-                ambientColor = Color(0x40000000)
-            )
             .border(
                 width = 0.5.dp,
                 color = Color(0xFFD9D9D9),
@@ -38,7 +35,7 @@ fun Label(styles: Styles, text: String) {
             text = text,
             fontFamily = styles.fontFamily,
             fontSize = 32.sp,
-            color = Color.Black,
+            color = color,
             modifier = Modifier.align(alignment = Alignment.Center),
         )
     }
