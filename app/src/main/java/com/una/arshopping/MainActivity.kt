@@ -36,6 +36,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge() // Enabling edge-to-edge support
         setContent {
+
             ARShoppingTheme { // Applying the theme to the composable UI
                 DrawerWithBlurEffect() // Calling the DrawerWithBlurEffect composable
             }
