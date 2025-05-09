@@ -1,12 +1,15 @@
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,10 +34,12 @@ fun TextInput(
     label: String,
     placeholder: String,
     isPassword: Boolean = false,
-    backgroundColor : Brush
+    backgroundColor: Brush,
+    event: () -> Unit = {},
+    input : MutableState<String>
 ) {
     val color = if (backgroundColor == styles.colorDarkBackground) Color.White else Color.Black
-    var text by remember { mutableStateOf("") }
+    var text by remember { input }
 
     Box(modifier = modifier) {
         OutlinedTextField(
@@ -59,7 +64,7 @@ fun TextInput(
             },
             textStyle = TextStyle(
                 fontFamily = styles.fontFamily,
-                fontSize = 20.sp,
+                fontSize = 18.sp,
                 color = color,
             ),
             singleLine = true,
@@ -75,7 +80,12 @@ fun TextInput(
             ),
             modifier = Modifier
                 .width(303.dp)
-                .height(63.dp)
+                .height(63.dp),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    event()
+                }
+            )
         )
     }
 }
