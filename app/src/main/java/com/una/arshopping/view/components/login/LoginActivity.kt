@@ -1,6 +1,7 @@
 package com.una.arshopping.view.components.login
 
 import TextInput
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,26 +22,60 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.login.imagecover.ImageCover
 import com.una.arshopping.view.components.login.label.Label
 import com.una.arshopping.view.components.login.providers.Providers
 import com.una.arshopping.view.components.login.recovery.RecoveryPass
 import com.una.arshopping.view.components.login.themeschema.ThemeSchema
+import com.una.arshopping.viewmodel.LoginViewModel
+import kotlin.jvm.java
 
 class LoginActivity : ComponentActivity() {
+    private lateinit var loginViewModel: LoginViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        //alert
+        loginViewModel.loginState.observe(this, Observer { loginSuccess ->
+            if (loginSuccess) {
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Login")
+                builder.setMessage("Login successful. Welcome back!")
+                builder.setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                val dialog = builder.create()
+                dialog.show()
+            } else {
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Login")
+                builder.setMessage("Login failed. Please check your credentials.")
+                builder.setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                val dialog = builder.create()
+                dialog.show()
+            }
+        })
+
         enableEdgeToEdge()
         setContent {
-            Background(Styles())
+            Background(
+                styles = Styles(),
+                loginViewModel = loginViewModel
+            )
         }
     }
 }
 
 @Composable
-fun Background(styles: Styles) {
+fun Background(styles: Styles, loginViewModel: LoginViewModel) {
     var colorBackground by remember { mutableStateOf(styles.colorLightBackground) }
+    val email = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .background(colorBackground)
@@ -65,7 +101,8 @@ fun Background(styles: Styles) {
             label = "User",
             placeholder = "Enter your user",
             isPassword = false,
-            backgroundColor = colorBackground
+            backgroundColor = colorBackground,
+            input = email
         )
         Spacer(Modifier.height(9.dp))
         TextInput(
@@ -73,7 +110,11 @@ fun Background(styles: Styles) {
             label = "Password",
             placeholder = "Enter your Password",
             isPassword = true,
-            backgroundColor = colorBackground
+            backgroundColor = colorBackground,
+            event = {
+                loginViewModel.validateUser(email.value, password.value)
+            },
+            input = password
         )
         Spacer(Modifier.height(8.dp))
         RecoveryPass(css = styles, backgroundColor = colorBackground)
@@ -96,5 +137,5 @@ fun Background(styles: Styles) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewLabel() {
-    Background(Styles())
+    Background(Styles(), LoginViewModel())
 }
