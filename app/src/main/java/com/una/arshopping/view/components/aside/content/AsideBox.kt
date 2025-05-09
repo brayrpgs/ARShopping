@@ -1,5 +1,6 @@
 package com.una.arshopping.view.components.aside.content
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -18,15 +19,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.una.arshopping.R
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.aside.button.Button
+import com.una.arshopping.view.components.preferences.PreferencesActivity
 
 @Composable
 fun AsideBox() {
     val styles = Styles()
+    val context = LocalContext.current
     Box(
         Modifier
             .padding(start = 5.dp, top = 20.dp)
@@ -66,16 +71,25 @@ fun AsideBox() {
                 Spacer(modifier = Modifier.height(25.dp))
 
                 val buttons = listOf(
-                    "My profile" to { /* My profile action */ },
-                    "Preferences" to { /* Preferences action */ },
-                    "Settings" to { /* Settings action */ }
+                    Triple("My profile", R.drawable.account_circle) {
+
+                    },
+                    Triple("Preferences", R.drawable.preferences) {
+                        val intent = Intent(context, PreferencesActivity::class.java)
+                        context.startActivity(intent)
+                    },
+                    Triple("Settings", R.drawable.settings) {
+
+                    }
                 )
 
-                buttons.forEach { (label, action) ->
+                buttons.forEach { (label, iconId, action) ->
                     Spacer(modifier = Modifier.height(25.dp))
 
                     Button(
                         text = label,
+                        iconId = iconId,
+                        iconContentDescription = label,
                         onClick = action,
                         contentColor = Color.Black,
                         modifier = Modifier

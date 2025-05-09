@@ -1,17 +1,34 @@
 package com.una.arshopping.view.components.aside.button
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.VerticalAlignmentLine
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.una.arshopping.R
 import com.una.arshopping.styles.Styles
 
 @Composable
@@ -20,7 +37,9 @@ fun Button(
     onClick: () -> Unit,
     contentColor: Color = Color.White,
     backgroundColor: Color = Color(0xFFB0CCDE),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    @DrawableRes iconId: Int,
+    iconContentDescription: String? = null
 ) {
     val styles = Styles()
     Button(
@@ -32,14 +51,29 @@ fun Button(
             contentColor = contentColor
         )
     ) {
-        Text(
-            text = text,
-            style = TextStyle(
-                fontFamily = styles.fontFamily,
-                fontSize = 20.sp,
-                color = contentColor,
 
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+
+            Icon(
+                painter = painterResource(id = iconId),
+                contentDescription = iconContentDescription,
+                tint = contentColor,
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .size(30.dp)
             )
-        )
+
+            Text(
+                text = text,
+                style = TextStyle(
+                    fontFamily = styles.fontFamily,
+                    fontSize = 20.sp,
+                    color = contentColor
+                )
+            )
+        }
     }
 }
