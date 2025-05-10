@@ -25,21 +25,38 @@ class PrincipalActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         productViewModel = ViewModelProvider(this)[ProductViewModel::class.java]
         productViewModel.getProduct()
-
+        val userId = intent.getIntExtra("USER_ID", -1)
+        val userUsername = intent.getStringExtra("USER_USERNAME") ?: ""
+        val userEmail = intent.getStringExtra("USER_EMAIL") ?: ""
+        val userAvatarUrl = intent.getStringExtra("USER_AVATAR_URL") ?: ""
         enableEdgeToEdge()
         setContent {
-            MainScreen(productViewModel)
+      
+            MainScreen(productViewModel,userId, userUsername, userEmail, userAvatarUrl)
+
         }
     }
 
-    @Composable
-    fun MainScreen(productViewModel: ProductViewModel) {
-        val productResponse by productViewModel.products.observeAsState()
+
+    
+@Composable
+fun MainScreen(productViewModel: ProductViewModel,userId: Int, userUsername: String, userEmail: String, userAvatarUrl: String) {
+  val productResponse by productViewModel.products.observeAsState()  
+  Column(
+       horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .background(Styles().colorLightBackground)
+            .fillMaxSize()
+
+
 
 
         val products = productResponse
+
+        
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -49,8 +66,10 @@ class PrincipalActivity : ComponentActivity() {
         ) {
 
 
-            MainLayout(products)
+
+            MainLayout(products,userId, userUsername, userEmail, userAvatarUrl)
         }
     }
 }
+
 

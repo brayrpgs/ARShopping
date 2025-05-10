@@ -2,6 +2,7 @@ package com.una.arshopping.view.components.singin
 
 import TextInput
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,6 +27,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.login.label.Label
 import com.una.arshopping.view.components.login.themeschema.ThemeSchema
+import com.una.arshopping.view.components.main.PrincipalActivity
 import com.una.arshopping.viewmodel.SingInViewModel
 
 class SingIn() : ComponentActivity() {
@@ -42,6 +44,8 @@ class SingIn() : ComponentActivity() {
                 builder.setMessage("Sing in successful. Welcome!")
                 builder.setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
+                    val intent = Intent(this, PrincipalActivity::class.java)
+                    this.startActivity(intent)
                 }
                 val dialog = builder.create()
                 dialog.show()

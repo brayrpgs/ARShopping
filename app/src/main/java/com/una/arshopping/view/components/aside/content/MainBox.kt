@@ -5,19 +5,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun MainBox() {
+fun MainBox(userId: Int, userUsername: String, userEmail: String, userAvatarUrl: String) {
 
     Box {
 
         Background()
-        AsideBox()
+        AsideBox(userId, userUsername, userEmail, userAvatarUrl)
 
     }
 
 }
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewMainBox() {
     MainBox()
-}
+}*/

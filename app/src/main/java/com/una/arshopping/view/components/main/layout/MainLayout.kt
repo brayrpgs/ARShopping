@@ -29,7 +29,8 @@ import com.una.arshopping.view.components.main.components.MenuButton
 import com.una.arshopping.view.components.main.components.SearchBar
 
 @Composable
-fun MainLayout(productResponse: ProductResponse?) {
+fun MainLayout(productResponse: ProductResponse?,userId: Int, userUsername: String, userEmail: String, userAvatarUrl: String) {
+
     val font = Styles().fontFamily
     var isMenuOpen by remember { mutableStateOf(false) }
 
@@ -44,7 +45,7 @@ fun MainLayout(productResponse: ProductResponse?) {
                     .fillMaxSize()
                     .zIndex(2f)
             ) {
-                MainBox()
+                MainBox(userId, userUsername, userEmail, userAvatarUrl)
 
                 Blur(onTapOutside = {
                     isMenuOpen = false

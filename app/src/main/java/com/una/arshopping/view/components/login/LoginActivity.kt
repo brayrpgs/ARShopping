@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
@@ -33,6 +34,7 @@ import com.una.arshopping.view.components.login.recovery.RecoveryPass
 import com.una.arshopping.view.components.login.themeschema.ThemeSchema
 import com.una.arshopping.view.components.main.PrincipalActivity
 import com.una.arshopping.view.components.myprofile.MyProfileActivity
+import com.una.arshopping.view.components.singin.SingIn
 import com.una.arshopping.viewmodel.LoginViewModel
 import kotlin.jvm.java
 
@@ -68,7 +70,6 @@ class LoginActivity : ComponentActivity() {
                 dialog.show()
             }
         })
-
         enableEdgeToEdge()
         setContent {
             Background(
@@ -84,6 +85,7 @@ fun Background(styles: Styles, loginViewModel: LoginViewModel) {
     var colorBackground by remember { mutableStateOf(styles.colorLightBackground) }
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .background(colorBackground)
@@ -125,7 +127,17 @@ fun Background(styles: Styles, loginViewModel: LoginViewModel) {
             input = password
         )
         Spacer(Modifier.height(8.dp))
-        RecoveryPass(css = styles, backgroundColor = colorBackground)
+        RecoveryPass(
+            css = styles,
+            backgroundColor = colorBackground,
+            create = {
+                val intent = Intent(context, SingIn::class.java)
+                context.startActivity(intent)
+            },
+            forgot = {
+
+            }
+        )
         Spacer(Modifier.height(7.dp))
         ThemeSchema(
             colorBackground = {
