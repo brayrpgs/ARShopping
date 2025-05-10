@@ -9,46 +9,50 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
-import com.una.arshopping.R
+import com.una.arshopping.model.ProductResponse
 
 @Composable
-fun ContentBox() {
-
+fun ContentBox(products: ProductResponse?) {
     Column(
         modifier = Modifier
             .width(350.dp)
             .background(color = Color(0x80D9D9D9), shape = RoundedCornerShape(size = 10.dp)),
         horizontalAlignment = Alignment.CenterHorizontally
-
     ) {
         Spacer(modifier = Modifier.height(4.dp))
-        Pagination(
-            currentPage = 1,
-            totalPages = 68,
-            onPageClick = { page -> println("Ir a la página $page") }
-        )
+
+
+        products?.data?.pagination?.let { pagination ->
+            Pagination(
+                currentPage = pagination.currentPage,
+                totalPages = pagination.totalPages,
+                onPageClick = { page -> println("Go to page $page") }
+            )
+        }
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        // Grid manual
         Column {
-            repeat(3) { // change the 3 for the result of you want in the row
+            products?.data?.products?.chunked(3)?.forEach { rowItems ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp, vertical = 4.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    repeat(3) {
+                    rowItems.forEach { product ->
                         ProductInfoCard(
-                            imageRes = R.drawable.login,
-                            heading = "Text",
-                            price = "$0",
-                            description = "Body"
+                            imageRes = product.images.firstOrNull()?.url ?: "",
+                            heading = product.name,
+                            price = "${product.typeCoin} ${product.price}",
+                            description = product.name
                         )
                     }
-                }
 
+                    repeat(3 - rowItems.size) {
+                        Spacer(modifier = Modifier.weight(1f))
+                    }
+                }
             }
         }
     }

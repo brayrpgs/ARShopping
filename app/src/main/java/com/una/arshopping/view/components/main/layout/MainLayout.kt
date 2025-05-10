@@ -15,10 +15,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import com.una.arshopping.model.ProductResponse
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.aside.blur.Blur
 import com.una.arshopping.view.components.aside.content.MainBox
@@ -29,7 +29,7 @@ import com.una.arshopping.view.components.main.components.MenuButton
 import com.una.arshopping.view.components.main.components.SearchBar
 
 @Composable
-fun MainLayout() {
+fun MainLayout(productResponse: ProductResponse?) {
     val font = Styles().fontFamily
     var isMenuOpen by remember { mutableStateOf(false) }
 
@@ -98,7 +98,7 @@ fun MainLayout() {
                         StoreLabel("Ebay", font)
                     }
                     Spacer(modifier = Modifier.height(16.dp))
-                    ContentBox()
+                    ContentBox(productResponse)
                 }
             }
         }
@@ -115,9 +115,3 @@ fun MainLayout() {
 
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewPrincipal() {
-    MainLayout()
-
-}
