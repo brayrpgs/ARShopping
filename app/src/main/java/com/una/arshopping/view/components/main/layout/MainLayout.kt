@@ -1,8 +1,6 @@
 package com.una.arshopping.view.components.main.layout
 
 import StoreLabel
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.Text
