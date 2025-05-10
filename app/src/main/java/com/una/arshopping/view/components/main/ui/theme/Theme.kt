@@ -1,4 +1,4 @@
-package com.una.arshopping.ui.theme
+package com.una.arshopping.view.components.main.ui.theme
 
 import android.app.Activity
 import android.os.Build
