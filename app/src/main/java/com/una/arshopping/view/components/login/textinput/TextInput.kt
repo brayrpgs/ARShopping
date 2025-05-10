@@ -30,18 +30,17 @@ import com.una.arshopping.styles.Styles
 @Composable
 fun TextInput(
     styles: Styles,
-    modifier: Modifier = Modifier,
     label: String,
     placeholder: String,
     isPassword: Boolean = false,
     backgroundColor: Brush,
     event: () -> Unit = {},
-    input : MutableState<String>
+    input : MutableState<String>,
 ) {
     val color = if (backgroundColor == styles.colorDarkBackground) Color.White else Color.Black
     var text by remember { input }
 
-    Box(modifier = modifier) {
+    Box() {
         OutlinedTextField(
             value = text,
             onValueChange = { text = it },
