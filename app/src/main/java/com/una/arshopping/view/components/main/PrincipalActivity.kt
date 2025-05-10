@@ -34,29 +34,27 @@ class PrincipalActivity : ComponentActivity() {
         val userAvatarUrl = intent.getStringExtra("USER_AVATAR_URL") ?: ""
         enableEdgeToEdge()
         setContent {
-      
-            MainScreen(productViewModel,userId, userUsername, userEmail, userAvatarUrl)
+
+            MainScreen(productViewModel, userId, userUsername, userEmail, userAvatarUrl)
 
         }
     }
 
 
-    
-@Composable
-fun MainScreen(productViewModel: ProductViewModel,userId: Int, userUsername: String, userEmail: String, userAvatarUrl: String) {
-  val productResponse by productViewModel.products.observeAsState()  
-  Column(
-       horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .background(Styles().colorLightBackground)
-            .fillMaxSize()
-
-
+    @Composable
+    fun MainScreen(
+        productViewModel: ProductViewModel,
+        userId: Int,
+        userUsername: String,
+        userEmail: String,
+        userAvatarUrl: String
+    ) {
+        val productResponse by productViewModel.products.observeAsState()
 
 
         val products = productResponse
 
-        
+
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -66,8 +64,7 @@ fun MainScreen(productViewModel: ProductViewModel,userId: Int, userUsername: Str
         ) {
 
 
-
-            MainLayout(products,userId, userUsername, userEmail, userAvatarUrl)
+            MainLayout(products, userId, userUsername, userEmail, userAvatarUrl)
         }
     }
 }
