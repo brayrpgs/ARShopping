@@ -20,6 +20,10 @@ class LoginViewModel : ViewModel() {
     private val _user = MutableStateFlow<UserInfoDTO?>(null)
     val user: StateFlow<UserInfoDTO?> get() = _user
 
+    //test
+    private val _userT = MutableLiveData<UserInfoDTO>()
+    val userT : LiveData<UserInfoDTO> = _userT
+
     fun validateUser(email: String, password: String) {
         viewModelScope.launch {
             val response = RetrofitInstance.api.login(
@@ -32,6 +36,9 @@ class LoginViewModel : ViewModel() {
             if (response.isSuccessful) {
                 val loginResponse = response.body()
                 _user.value = loginResponse?.user
+
+                //test
+                _userT.value = loginResponse?.user
 
                 Log.i("LOGIN", "Usuario logueado: ${_user.value?.username}, correo: ${user.value?.email}")
                 Log.i("LOGIN", "Login exitoso. Código: ${response.code()}")

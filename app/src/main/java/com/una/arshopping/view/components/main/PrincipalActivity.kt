@@ -17,11 +17,11 @@ import com.una.arshopping.view.components.main.layout.MainLayout
 
 class PrincipalActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             MainScreen()
-
         }
     }
 }

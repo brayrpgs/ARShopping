@@ -31,6 +31,7 @@ import com.una.arshopping.view.components.login.label.Label
 import com.una.arshopping.view.components.login.providers.Providers
 import com.una.arshopping.view.components.login.recovery.RecoveryPass
 import com.una.arshopping.view.components.login.themeschema.ThemeSchema
+import com.una.arshopping.view.components.main.PrincipalActivity
 import com.una.arshopping.view.components.myprofile.MyProfileActivity
 import com.una.arshopping.viewmodel.LoginViewModel
 import kotlin.jvm.java
@@ -49,7 +50,7 @@ class LoginActivity : ComponentActivity() {
                 builder.setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                 }
-                val intent = Intent(this, MyProfileActivity::class.java).apply {
+                val intent = Intent(this, PrincipalActivity::class.java).apply {
                     putExtra("USER_ID", loginViewModel.user.value?.id)
                     putExtra("USER_USERNAME", loginViewModel.user.value?.username)
                     putExtra("USER_EMAIL", loginViewModel.user.value?.email)
