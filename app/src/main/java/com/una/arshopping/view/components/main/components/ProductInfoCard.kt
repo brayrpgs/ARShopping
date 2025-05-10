@@ -1,23 +1,20 @@
 package com.una.arshopping.view.components.main.components
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.una.arshopping.R
+import coil.compose.rememberAsyncImagePainter
+
 
 @Composable
 fun ProductInfoCard(
-    imageRes: Int,
+    imageRes: String,
     heading: String,
     price: String,
     description: String
@@ -25,7 +22,7 @@ fun ProductInfoCard(
     Card(
         modifier = Modifier
             .width(100.dp)
-            .height(160.dp) // altura reducida
+            .height(160.dp)
             ,
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
@@ -35,7 +32,7 @@ fun ProductInfoCard(
                 .padding(8.dp)
         ) {
             Image(
-                painter = painterResource(id = imageRes),
+                painter = rememberAsyncImagePainter(imageRes),
                 contentDescription = "Product image",
                 modifier = Modifier
                     .height(40.dp)
