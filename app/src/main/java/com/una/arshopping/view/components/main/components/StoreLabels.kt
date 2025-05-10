@@ -10,13 +10,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.draw.shadow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.TextButton
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
 import com.una.arshopping.styles.Styles
-import com.una.arshopping.view.components.main.layout.MainLayout
 
 @Composable
 fun StoreLabel(name: String, font: FontFamily) {

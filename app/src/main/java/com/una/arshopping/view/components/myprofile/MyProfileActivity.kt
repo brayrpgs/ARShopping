@@ -50,6 +50,7 @@ class MyProfileActivity : ComponentActivity() {
         val userEmail = intent.getStringExtra("USER_EMAIL") ?: ""
         val userAvatarUrl = intent.getStringExtra("USER_AVATAR_URL") ?: ""
 
+
         setContent {
             ARShoppingTheme{
                 MyProfileScreen(Styles(), viewModel, userId, userUsername, userEmail, userAvatarUrl)

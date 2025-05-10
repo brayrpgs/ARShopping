@@ -1,7 +1,6 @@
 package com.una.arshopping.model
 
-data class ApiResponse(
+data class ProductResponse(
     val success: Boolean,
-    val data: DataWrapper
+    val data: ProductWrapper
 )
-

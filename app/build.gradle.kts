@@ -64,7 +64,10 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx.v290)
-    implementation("io.coil-kt:coil-compose:2.1.0")
+    implementation(libs.coil.compose)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.androidx.runtime.livedata)
+
 
 
 }
