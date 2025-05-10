@@ -1,5 +1,4 @@
 package com.una.arshopping.view.components.aside.blur
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -18,7 +17,7 @@ fun Blur(onTapOutside: () -> Unit) {
 
             .width(109.dp)
             .height(956.dp)
-            .background(color = Color(0x6E000000))
+            .background(Color.Black.copy(alpha = 0.5f))
             .pointerInput(Unit) {
                 detectTapGestures(onTap = {
                     onTapOutside()
