@@ -47,12 +47,12 @@ fun MainScreen(userId: Int, userUsername: String, userEmail: String, userAvatarU
     }
 
 }
+
 /*
 @Preview(showBackground = true)
 @Composable
 fun PreviewPrincipal() {
     MainScreen()
 
-}
-*/
+}*/
 
