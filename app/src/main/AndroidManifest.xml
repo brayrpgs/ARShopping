@@ -30,6 +30,10 @@
             android:exported="true"
             android:theme="@style/Theme.ARShopping" />
         <activity
+            android:name=".view.components.myprofile.MyProfileActivity"
+            android:exported="true"
+            android:theme="@style/Theme.ARShopping" />
+        <activity
             android:name=".view.components.login.LoginActivity"
             android:exported="true">
             <intent-filter>

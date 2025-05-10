@@ -2,8 +2,6 @@ package com.una.arshopping.view.components.main.components
 
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,7 +16,7 @@ fun ContentBox() {
 
     Column(
         modifier = Modifier
-            .width(352.dp)
+            .width(350.dp)
             .background(color = Color(0x80D9D9D9), shape = RoundedCornerShape(size = 10.dp)),
         horizontalAlignment = Alignment.CenterHorizontally
 

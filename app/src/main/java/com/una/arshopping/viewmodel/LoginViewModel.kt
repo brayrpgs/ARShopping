@@ -6,7 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.una.arshopping.model.LoginRequest
+import com.una.arshopping.model.dto.UserInfoDTO
 import com.una.arshopping.network.RetrofitInstance
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
@@ -14,6 +17,12 @@ class LoginViewModel : ViewModel() {
     private val _loginState = MutableLiveData<Boolean>()
     val loginState: LiveData<Boolean> = _loginState
 
+    private val _user = MutableStateFlow<UserInfoDTO?>(null)
+    val user: StateFlow<UserInfoDTO?> get() = _user
+
+    //test
+    private val _userT = MutableLiveData<UserInfoDTO>()
+    val userT : LiveData<UserInfoDTO> = _userT
 
     fun validateUser(email: String, password: String) {
         viewModelScope.launch {
@@ -23,7 +32,15 @@ class LoginViewModel : ViewModel() {
                     password = password
                 )
             )
+
             if (response.isSuccessful) {
+                val loginResponse = response.body()
+                _user.value = loginResponse?.user
+
+                //test
+                _userT.value = loginResponse?.user
+
+                Log.i("LOGIN", "Usuario logueado: ${_user.value?.username}, correo: ${user.value?.email}")
                 Log.i("LOGIN", "Login exitoso. Código: ${response.code()}")
                 _loginState.value = true
             } else {
