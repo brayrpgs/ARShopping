@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,12 +35,15 @@ class PrincipalActivity : ComponentActivity() {
 fun MainScreen() {
     Column(
        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.background(Styles().colorLightBackground).fillMaxSize()
+        modifier = Modifier
+            .background(Styles().colorLightBackground)
+            .fillMaxSize()
+
     ){
-        Spacer(modifier = Modifier.height(42.dp))
+
         MainLayout()
-        Spacer(modifier = Modifier.height(18.dp))
-        CompareButton(font = Styles().fontFamily)
+
+
     }
 
 }

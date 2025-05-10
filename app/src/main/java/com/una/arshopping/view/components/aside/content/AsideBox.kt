@@ -17,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -35,18 +34,14 @@ fun AsideBox() {
     Box(
         Modifier
             .padding(start = 5.dp, top = 20.dp)
-            .shadow(
-                elevation = 3.dp,
-                spotColor = Color(0x40000000),
-                ambientColor = Color(0x40000000)
-            )
+
             .border(
                 width = 1.dp,
                 color = Color(0xFFFFFFFF),
                 shape = RoundedCornerShape(size = 24.dp)
             )
             .width(320.dp)
-            .height(825.dp)
+            .height(830.dp)
             .background(color = Color(0x1A000000), shape = RoundedCornerShape(size = 24.dp))
             .offset(0.dp, 55.dp)
     ) {

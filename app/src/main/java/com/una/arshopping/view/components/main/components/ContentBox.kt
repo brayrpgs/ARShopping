@@ -18,7 +18,7 @@ fun ContentBox() {
 
     Column(
         modifier = Modifier
-            .width(352.dp)
+            .width(350.dp)
             .background(color = Color(0x80D9D9D9), shape = RoundedCornerShape(size = 10.dp)),
         horizontalAlignment = Alignment.CenterHorizontally
 

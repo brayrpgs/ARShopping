@@ -17,6 +17,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.draw.shadow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.TextButton
+import androidx.compose.ui.tooling.preview.Preview
+import com.una.arshopping.styles.Styles
+import com.una.arshopping.view.components.main.layout.MainLayout
 
 @Composable
 fun CompareButton(font: FontFamily) {

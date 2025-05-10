@@ -15,8 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.una.arshopping.MainActivity
 import com.una.arshopping.R
+import com.una.arshopping.view.components.main.PrincipalActivity
 
 @Composable
 fun GetBackButton(){
@@ -26,7 +26,7 @@ fun GetBackButton(){
     ) {
         FilledIconButton(
             onClick = {
-                val intent = Intent(context, MainActivity::class.java)
+                val intent = Intent(context, PrincipalActivity::class.java)
                 context.startActivity(intent)
             },
             modifier = Modifier

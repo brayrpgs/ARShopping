@@ -10,6 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.tooling.preview.Preview
+import com.una.arshopping.view.components.main.layout.MainLayout
 
 @Composable
 fun MainFrame(content: @Composable BoxScope.() -> Unit) {
@@ -21,7 +23,9 @@ fun MainFrame(content: @Composable BoxScope.() -> Unit) {
             .padding(0.5.dp)
             .width(391.dp)
             .height(831.dp)
-            .background(color = Color(0x40D9D9D9), shape = RoundedCornerShape(size = 10.dp)),
+            .background(color = Color(0x40D9D9D9), shape = RoundedCornerShape(size = 10.dp))
+        ,
         content = content
     )
 }
+
