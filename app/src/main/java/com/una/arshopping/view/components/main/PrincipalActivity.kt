@@ -19,15 +19,21 @@ class PrincipalActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
+        val userId = intent.getIntExtra("USER_ID", -1)
+        val userUsername = intent.getStringExtra("USER_USERNAME") ?: ""
+        val userEmail = intent.getStringExtra("USER_EMAIL") ?: ""
+        val userAvatarUrl = intent.getStringExtra("USER_AVATAR_URL") ?: ""
+
         enableEdgeToEdge()
         setContent {
-            MainScreen()
+            MainScreen(userId, userUsername, userEmail, userAvatarUrl)
         }
     }
 }
 
 @Composable
-fun MainScreen() {
+fun MainScreen(userId: Int, userUsername: String, userEmail: String, userAvatarUrl: String) {
     Column(
        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -36,18 +42,18 @@ fun MainScreen() {
 
     ){
 
-        MainLayout()
+        MainLayout(userId, userUsername, userEmail, userAvatarUrl)
 
 
     }
 
 }
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewPrincipal() {
     MainScreen()
 
-}
+}*/
 
 
