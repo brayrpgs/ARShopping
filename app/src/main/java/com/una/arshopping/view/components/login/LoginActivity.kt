@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,7 +32,6 @@ import com.una.arshopping.view.components.login.providers.Providers
 import com.una.arshopping.view.components.login.recovery.RecoveryPass
 import com.una.arshopping.view.components.login.themeschema.ThemeSchema
 import com.una.arshopping.view.components.main.PrincipalActivity
-import com.una.arshopping.view.components.myprofile.MyProfileActivity
 import com.una.arshopping.view.components.singin.SingIn
 import com.una.arshopping.viewmodel.LoginViewModel
 import kotlin.jvm.java

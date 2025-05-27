@@ -1,5 +1,8 @@
 package com.una.arshopping
 
+import android.util.Log
+import com.una.arshopping.helpers.INSERT_USER
+import com.una.arshopping.model.User
 import org.junit.Test
 
 import org.junit.Assert.*
