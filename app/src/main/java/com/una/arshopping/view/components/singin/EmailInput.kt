@@ -1,4 +1,4 @@
-package com.una.arshopping.view.components.login.textinput
+package com.una.arshopping.view.components.singin
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
@@ -27,8 +27,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.una.arshopping.styles.Styles
 
+
 @Composable
-fun TextInput(
+fun EmailInput(
     styles: Styles,
     label: String,
     placeholder: String,
@@ -36,11 +37,13 @@ fun TextInput(
     backgroundColor: Brush,
     event: () -> Unit = {},
     input: MutableState<String>,
-    isError: Boolean = false,
-    supportingText: @Composable (() -> Unit)? = null,
 ) {
     val color = if (backgroundColor == styles.colorDarkBackground) Color.White else Color.Black
     var text by remember { input }
+
+    // Regex para validar el email
+    val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
+    val isValidEmail = emailPattern.matches(text)
 
     Box {
         OutlinedTextField(
@@ -73,18 +76,32 @@ fun TextInput(
             keyboardOptions = if (isPassword) {
                 KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done)
             } else {
-                KeyboardOptions.Default
+                KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Done)
             },
-            keyboardActions = KeyboardActions(onDone = { event() }),
-            isError = isError,
-            supportingText = supportingText,
+            isError = !isValidEmail && text.isNotEmpty(),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = if (isError) Color.Red else Color.DarkGray,
-                unfocusedBorderColor = if (isError) Color.Red else Color.White
+                focusedBorderColor = if (!isValidEmail && text.isNotEmpty()) Color.Red else Color.DarkGray,
+                unfocusedBorderColor = if (!isValidEmail && text.isNotEmpty()) Color.Red else Color.White
             ),
             modifier = Modifier
                 .width(303.dp)
-                .height(63.dp),
+                .height(85.dp),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    event()
+                }
+            ),
+            supportingText = {
+                if (!isValidEmail && text.isNotEmpty()) {
+                    Text(
+                        text = "Please enter a valid email address",
+                        color = Color.Red,
+                        fontSize = 12.sp,
+                        fontFamily = styles.fontFamily
+                    )
+                }
+            }
         )
     }
 }
+

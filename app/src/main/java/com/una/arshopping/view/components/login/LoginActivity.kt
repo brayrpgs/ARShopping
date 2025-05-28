@@ -1,6 +1,6 @@
 package com.una.arshopping.view.components.login
 
-import TextInput
+import com.una.arshopping.view.components.login.textinput.TextInput
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle

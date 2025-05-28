@@ -22,33 +22,42 @@ class LoginViewModel : ViewModel() {
 
     //test
     private val _userT = MutableLiveData<UserInfoDTO>()
-    val userT : LiveData<UserInfoDTO> = _userT
+    val userT: LiveData<UserInfoDTO> = _userT
 
     fun validateUser(email: String, password: String) {
         viewModelScope.launch {
-            val response = RetrofitInstance.api.login(
-                LoginRequest(
-                    email = email,
-                    password = password
+            try {
+                val response = RetrofitInstance.api.login(
+                    LoginRequest(
+                        email = email,
+                        password = password
+                    )
                 )
-            )
 
-            if (response.isSuccessful) {
-                val loginResponse = response.body()
-                _user.value = loginResponse?.user
+                if (response.isSuccessful) {
+                    val loginResponse = response.body()
+                    _user.value = loginResponse?.user
 
-                //test
-                _userT.value = loginResponse?.user
+                    //test
+                    _userT.value = loginResponse?.user
 
-                Log.i("LOGIN", "Usuario logueado: ${_user.value?.username}, correo: ${user.value?.email}")
-                Log.i("LOGIN", "Login exitoso. Código: ${response.code()}")
-                _loginState.value = true
-            } else {
-                Log.e("LOGIN", "Error de login. Código: ${response.code()}")
-                val errorText = response.errorBody()?.string()
-                Log.e("LOGIN", "Mensaje: $errorText")
+                    Log.i(
+                        "LOGIN",
+                        "Usuario logueado: ${_user.value?.username}, correo: ${user.value?.email}"
+                    )
+                    Log.i("LOGIN", "Login exitoso. Código: ${response.code()}")
+                    _loginState.value = true
+                } else {
+                    Log.e("LOGIN", "Error de login. Código: ${response.code()}")
+                    val errorText = response.errorBody()?.string()
+                    Log.e("LOGIN", "Mensaje: $errorText")
+                    _loginState.value = false
+                }
+            } catch (e: Exception) {
+                Log.e("LOGIN", "Excepción durante el login", e)
                 _loginState.value = false
             }
         }
     }
+
 }

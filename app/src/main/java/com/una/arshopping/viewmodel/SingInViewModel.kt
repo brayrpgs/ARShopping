@@ -21,25 +21,31 @@ class SingInViewModel : ViewModel() {
         lastName: String
     ) {
         viewModelScope.launch {
-            val response = RetrofitInstance.api.createUser(
-                UserRequest(
-                    username,
-                    email,
-                    password,
-                    firstName,
-                    lastName
+            try {
+                val response = RetrofitInstance.api.createUser(
+                    UserRequest(
+                        username,
+                        email,
+                        password,
+                        firstName,
+                        lastName
+                    )
                 )
-            )
-            if (response.isSuccessful) {
-                Log.i("SINGIN", "Singin exitoso. Código: ${response.code()}")
-                _singInState.value = true
-            } else {
-                Log.e("SINGIN", "Error de Singin. Código: ${response.code()}")
-                val errorText = response.errorBody()?.string()
-                Log.e("SINGIN", "Mensaje: $errorText")
+                if (response.isSuccessful) {
+                    Log.i("SINGIN", "Sign-in successful. Code: ${response.code()}")
+                    _singInState.value = true
+                } else {
+                    Log.e("SINGIN", "Sign-in failed. Code: ${response.code()}")
+                    val errorText = response.errorBody()?.string()
+                    Log.e("SINGIN", "Message: $errorText")
+                    _singInState.value = false
+                }
+            } catch (e: Exception) {
+                Log.e("SINGIN", "Exception during sign-in", e)
                 _singInState.value = false
             }
         }
     }
+
 
 }
