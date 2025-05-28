@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -38,6 +39,7 @@ fun TextInput(
     input: MutableState<String>,
     isError: Boolean = false,
     supportingText: @Composable (() -> Unit)? = null,
+    showSupportingText: Boolean = false, // <--- nuevo
 ) {
     val color = if (backgroundColor == styles.colorDarkBackground) Color.White else Color.Black
     var text by remember { input }
@@ -84,7 +86,8 @@ fun TextInput(
             ),
             modifier = Modifier
                 .width(303.dp)
-                .height(63.dp),
+                .height(if (showSupportingText) 75.dp else 63.dp),
         )
     }
 }
+

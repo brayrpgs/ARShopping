@@ -164,6 +164,7 @@ fun Background(styles: Styles, singInViewModel: SingInViewModel) {
             backgroundColor = colorBackground,
             input = confirmPassword,
             isError = showPasswordError.value,
+            showSupportingText = showPasswordError.value,
             supportingText = {
                 if (showPasswordError.value) {
                     Text(
