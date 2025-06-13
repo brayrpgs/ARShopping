@@ -1,5 +1,7 @@
 package com.una.arshopping.view.components.login.providers
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -14,12 +16,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.una.arshopping.R
+import com.una.arshopping.repository.deleteUser
 
 @Composable
 fun Providers() {
+    val context = LocalContext.current
     Row(
         modifier = Modifier
             .border(
@@ -37,7 +42,11 @@ fun Providers() {
             colors = IconButtonDefaults.filledIconButtonColors(
                 containerColor = Color.Transparent
             ),
-            onClick = {},
+            onClick = {
+                deleteUser(context)
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://10.0.2.2:3000/auth/google"))
+                context.startActivity(intent)
+            },
             modifier = Modifier
                 .width(53.dp)
                 .height(53.dp),
@@ -59,7 +68,11 @@ fun Providers() {
             colors = IconButtonDefaults.filledIconButtonColors(
                 containerColor = Color.Transparent
             ),
-            onClick = {},
+            onClick = {
+                deleteUser(context)
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://10.0.2.2:3000/auth/github"))
+                context.startActivity(intent)
+            },
             modifier = Modifier
                 .width(53.dp)
                 .height(53.dp),
@@ -79,7 +92,12 @@ fun Providers() {
             colors = IconButtonDefaults.filledIconButtonColors(
                 containerColor = Color.Transparent
             ),
-            onClick = {},
+            onClick = {
+                deleteUser(context)
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://10.0.2.2:3000/auth/facebook"))
+                context.startActivity(intent)
+
+            },
             modifier = Modifier
                 .width(53.dp)
                 .height(53.dp),

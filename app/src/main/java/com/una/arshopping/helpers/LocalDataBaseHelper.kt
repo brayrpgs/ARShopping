@@ -16,6 +16,7 @@ class LocalDataBaseHelper(context: Context) : SQLiteOpenHelper(
      */
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(CREATE_USERS_TABLE)
+
     }
 
 
