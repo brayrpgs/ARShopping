@@ -1,9 +1,10 @@
 package com.una.arshopping.view.components.login
 
-import TextInput
+import com.una.arshopping.view.components.login.textinput.TextInput
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +26,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.una.arshopping.model.dto.UserInfoDTO
+import com.una.arshopping.repository.deleteUser
+import com.una.arshopping.repository.getAllUsers
+import com.una.arshopping.repository.insert
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.login.imagecover.ImageCover
 import com.una.arshopping.view.components.login.label.Label
@@ -33,17 +37,61 @@ import com.una.arshopping.view.components.login.providers.Providers
 import com.una.arshopping.view.components.login.recovery.RecoveryPass
 import com.una.arshopping.view.components.login.themeschema.ThemeSchema
 import com.una.arshopping.view.components.main.PrincipalActivity
-import com.una.arshopping.view.components.myprofile.MyProfileActivity
 import com.una.arshopping.view.components.singin.SingIn
 import com.una.arshopping.viewmodel.LoginViewModel
 import kotlin.jvm.java
 
 class LoginActivity : ComponentActivity() {
+    /**
+     * this is the viewmodel login
+     */
     private lateinit var loginViewModel: LoginViewModel
+
+    /**********************************************
+     * method to intent access to browsers
+     * @param intent
+     */
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        val data = intent.data
+        if (data?.scheme == "arshopping" && data.host == "auth") {
+            val email = data.getQueryParameter("email")
+            val username = data.getQueryParameter("username")
+            val avatar_url = data.getQueryParameter("avatar_url")
+            val isActive = data.getQueryParameter("isActive")
+            Log.d(
+                "GET_DATA",
+                "email: $email, username: $username, avatar_url: $avatar_url isActive: $isActive"
+            )
+            val user = UserInfoDTO(
+                id = 1,
+                email = email!!,
+                username = username!!,
+                avatarUrl = avatar_url,
+                isActive = isActive == "1"
+            )
+            Log.d("GET_DATA", "user: $user")
+            insert(this, user)
+            val intent = Intent(this, PrincipalActivity::class.java)
+            this.startActivity(intent)
+        }
+    }
+
+    /**
+     * on create function ,
+     * initialize view model and observer login state
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /**
+         * initialize view model
+         */
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-        //alert
+
+        /**
+         * function to observe login state
+         */
         loginViewModel.loginState.observe(this, Observer { loginSuccess ->
             if (loginSuccess) {
                 val builder = AlertDialog.Builder(this)
@@ -52,12 +100,7 @@ class LoginActivity : ComponentActivity() {
                 builder.setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                 }
-                val intent = Intent(this, PrincipalActivity::class.java).apply {
-                    putExtra("USER_ID", loginViewModel.user.value?.id)
-                    putExtra("USER_USERNAME", loginViewModel.user.value?.username)
-                    putExtra("USER_EMAIL", loginViewModel.user.value?.email)
-                    putExtra("USER_AVATAR_URL", loginViewModel.user.value?.avatarUrl)
-                }
+                val intent = Intent(this, PrincipalActivity::class.java)
                 this.startActivity(intent)
             } else {
                 val builder = AlertDialog.Builder(this)
@@ -70,12 +113,35 @@ class LoginActivity : ComponentActivity() {
                 dialog.show()
             }
         })
+
+
+        /**
+         * function to observe user information
+         */
+        loginViewModel.user.observe(this, Observer { user ->
+            if (user != null) {
+                insert(this, user)
+            }
+        })
+
+        /**
+         * design and components
+         */
         enableEdgeToEdge()
         setContent {
             Background(
                 styles = Styles(),
                 loginViewModel = loginViewModel
             )
+        }
+
+        /**
+         * check if user is logged in
+         */
+        val user = getAllUsers(this)
+        if (user.isNotEmpty()) {
+            val intent = Intent(this, PrincipalActivity::class.java)
+            this.startActivity(intent)
         }
     }
 }
@@ -122,6 +188,7 @@ fun Background(styles: Styles, loginViewModel: LoginViewModel) {
             isPassword = true,
             backgroundColor = colorBackground,
             event = {
+                deleteUser(context)
                 loginViewModel.validateUser(email.value, password.value)
             },
             input = password

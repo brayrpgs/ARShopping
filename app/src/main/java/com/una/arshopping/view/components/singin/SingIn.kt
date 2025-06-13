@@ -1,6 +1,6 @@
 package com.una.arshopping.view.components.singin
 
-import TextInput
+import com.una.arshopping.view.components.login.textinput.TextInput
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -13,15 +13,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.una.arshopping.styles.Styles
@@ -75,12 +79,21 @@ fun Background(styles: Styles, singInViewModel: SingInViewModel) {
     /**
      * states
      * */
+
+
     var user = remember { mutableStateOf("") }
     var email = remember { mutableStateOf("") }
     var firstName = remember { mutableStateOf("") }
     var lastName = remember { mutableStateOf("") }
     var password = remember { mutableStateOf("") }
     var confirmPassword = remember { mutableStateOf("") }
+    val showPasswordError = remember {
+        derivedStateOf {
+            password.value.isNotEmpty() &&
+                    confirmPassword.value.isNotEmpty() &&
+                    password.value != confirmPassword.value
+        }
+    }
 
 
     Column(
@@ -103,7 +116,7 @@ fun Background(styles: Styles, singInViewModel: SingInViewModel) {
             input = user
         )
         Spacer(Modifier.height(17.dp))
-        TextInput(
+        EmailInput(
             styles = styles,
             label = "Email",
             placeholder = "Enter your Email",
@@ -111,7 +124,7 @@ fun Background(styles: Styles, singInViewModel: SingInViewModel) {
             backgroundColor = colorBackground,
             input = email
         )
-        Spacer(Modifier.height(50.dp))
+        //Spacer(Modifier.height(50.dp))
 
         TextInput(
             styles = styles,
@@ -149,7 +162,19 @@ fun Background(styles: Styles, singInViewModel: SingInViewModel) {
             placeholder = "Confirm your Password",
             isPassword = true,
             backgroundColor = colorBackground,
-            input = confirmPassword
+            input = confirmPassword,
+            isError = showPasswordError.value,
+            showSupportingText = showPasswordError.value,
+            supportingText = {
+                if (showPasswordError.value) {
+                    Text(
+                        text = "Passwords do not match",
+                        color = Color.Red,
+                        fontSize = 12.sp,
+                        fontFamily = styles.fontFamily
+                    )
+                }
+            }
         )
         Spacer(Modifier.height(20.dp))
         ButtonNormal(
