@@ -73,7 +73,7 @@ class LoginActivity : ComponentActivity() {
                 avatarUrl = avatar_url,
                 isActive = isActive == "1"
             )
-            Log.d("GET_DATA", "user: $user")
+            Log.d("GET_DATA_BY_WEB", "user: $user")
             insert(this, user)
             val intent = Intent(this, PrincipalActivity::class.java)
             this.startActivity(intent)
