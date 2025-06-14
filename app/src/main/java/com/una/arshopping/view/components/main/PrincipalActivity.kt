@@ -20,40 +20,30 @@ import androidx.compose.runtime.livedata.observeAsState
 
 class PrincipalActivity : ComponentActivity() {
     private lateinit var productViewModel: ProductViewModel
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         productViewModel = ViewModelProvider(this)[ProductViewModel::class.java]
         productViewModel.getProduct()
-        val userId = intent.getIntExtra("USER_ID", -1)
-        val userUsername = intent.getStringExtra("USER_USERNAME") ?: ""
-        val userEmail = intent.getStringExtra("USER_EMAIL") ?: ""
-        val userAvatarUrl = intent.getStringExtra("USER_AVATAR_URL") ?: ""
         enableEdgeToEdge()
         setContent {
-
-            MainScreen(productViewModel, userId, userUsername, userEmail, userAvatarUrl)
-
+            MainScreen(productViewModel)
         }
     }
 
 
     @Composable
     fun MainScreen(
-        productViewModel: ProductViewModel,
-        userId: Int,
-        userUsername: String,
-        userEmail: String,
-        userAvatarUrl: String
+        productViewModel: ProductViewModel
     ) {
+        /**
+         * gets data products by observer pattern
+         */
         val productResponse by productViewModel.products.observeAsState()
-
-
         val products = productResponse
 
+        /**
+         * get to local storage theme and set it
+         */
 
 
         Column(
@@ -62,9 +52,7 @@ class PrincipalActivity : ComponentActivity() {
                 .background(Styles().colorLightBackground)
                 .fillMaxSize()
         ) {
-
-
-            MainLayout(products, userId, userUsername, userEmail, userAvatarUrl)
+            MainLayout(products)
         }
     }
 }
