@@ -28,8 +28,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.una.arshopping.model.dto.UserInfoDTO
 import com.una.arshopping.repository.deleteUser
+import com.una.arshopping.repository.gelAllTheme
 import com.una.arshopping.repository.getAllUsers
 import com.una.arshopping.repository.insert
+import com.una.arshopping.repository.insertTheme
+import com.una.arshopping.repository.updateTheme
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.login.imagecover.ImageCover
 import com.una.arshopping.view.components.login.label.Label
@@ -148,10 +151,37 @@ class LoginActivity : ComponentActivity() {
 
 @Composable
 fun Background(styles: Styles, loginViewModel: LoginViewModel) {
-    var colorBackground by remember { mutableStateOf(styles.colorLightBackground) }
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val context = LocalContext.current
+
+    /**
+     * get theme
+     */
+    var theme = gelAllTheme(context)
+    Log.d("THEME_FETCH", "theme: $theme")
+    var colorBackground by remember { mutableStateOf(styles.colorLightBackground) }
+    if(theme == 0){
+        colorBackground = styles.colorLightBackground
+        insertTheme(context, 1)
+    }
+    /**
+     * set the theme
+     */
+    if (theme == 1) {
+        colorBackground = styles.colorLightBackground
+        Log.d("THEME_SELECTED", "theme: $theme")
+    }
+    else if (theme == 2) {
+        colorBackground = styles.colorDarkBackground
+        Log.d("THEME_SELECTED", "theme: $theme")
+    }
+    else{
+        colorBackground = styles.colorLightBackground
+        Log.d("THEME_SELECTED", "theme: $theme")
+    }
+    Log.d("THEME_SELECTED", "colorBackground: $colorBackground")
+
     Column(
         modifier = Modifier
             .background(colorBackground)
@@ -206,12 +236,19 @@ fun Background(styles: Styles, loginViewModel: LoginViewModel) {
             }
         )
         Spacer(Modifier.height(7.dp))
+        /**
+         * get the theme from the database and set the theme
+         */
         ThemeSchema(
             colorBackground = {
                 if (colorBackground == styles.colorLightBackground) {
                     colorBackground = styles.colorDarkBackground
+                    updateTheme(context, 2)
+                    theme = 2
                 } else {
                     colorBackground = styles.colorLightBackground
+                    updateTheme(context, 1)
+                    theme = 1
                 }
             },
             backgroundColor = colorBackground

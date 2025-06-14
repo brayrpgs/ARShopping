@@ -1,6 +1,15 @@
 package com.una.arshopping.view.components.main.layout
 
 import StoreLabel
+import android.transition.Fade
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.Text
@@ -29,23 +38,39 @@ import com.una.arshopping.view.components.main.components.MenuButton
 import com.una.arshopping.view.components.main.components.SearchBar
 
 @Composable
-fun MainLayout(productResponse: ProductResponse?,userId: Int, userUsername: String, userEmail: String, userAvatarUrl: String) {
+fun MainLayout(
+    productResponse: ProductResponse?
+) {
 
     val font = Styles().fontFamily
     var isMenuOpen by remember { mutableStateOf(false) }
 
+    /**
+     * main layout view
+     */
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
 
-        if (isMenuOpen) {
+        /**
+         * kendall's component button with animation
+         */
+
+        AnimatedVisibility(
+            visible = isMenuOpen,
+            enter = slideInHorizontally(initialOffsetX = { -300 }) + fadeIn(),
+            exit = slideOutHorizontally(targetOffsetX = { -300 }) + fadeOut(),
+            modifier = Modifier
+                .fillMaxSize()
+                .zIndex(1f)
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxSize()
                     .zIndex(2f)
             ) {
-                MainBox(userId, userUsername, userEmail, userAvatarUrl)
+                MainBox()
 
                 Blur(onTapOutside = {
                     isMenuOpen = false
@@ -53,6 +78,9 @@ fun MainLayout(productResponse: ProductResponse?,userId: Int, userUsername: Stri
             }
         }
 
+        /**
+         * is the box glass
+         */
         Box(
             modifier = Modifier
                 .width(370.dp)
@@ -91,7 +119,9 @@ fun MainLayout(productResponse: ProductResponse?,userId: Int, userUsername: Stri
                     SearchBar()
                     Spacer(modifier = Modifier.height(16.dp))
                     Row(
-                        modifier = Modifier.fillMaxWidth().height(30.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(30.dp),
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
                         StoreLabel("Amazon", font)

@@ -29,7 +29,7 @@ import com.una.arshopping.view.components.myprofile.MyProfileActivity
 import com.una.arshopping.view.components.preferences.PreferencesActivity
 
 @Composable
-fun AsideBox(userId: Int, userUsername: String, userEmail: String, userAvatarUrl: String) {
+fun AsideBox() {
     val styles = Styles()
     val context = LocalContext.current
     Box(
@@ -68,12 +68,7 @@ fun AsideBox(userId: Int, userUsername: String, userEmail: String, userAvatarUrl
 
                 val buttons = listOf(
                     Triple("My profile", R.drawable.account_circle) {
-                        val intent = Intent(context, MyProfileActivity::class.java).apply {
-                            putExtra("USER_ID", userId)
-                            putExtra("USER_USERNAME", userUsername)
-                            putExtra("USER_EMAIL", userEmail)
-                            putExtra("USER_AVATAR_URL", userAvatarUrl)
-                        }
+                        val intent = Intent(context, MyProfileActivity::class.java)
                         context.startActivity(intent)
                     },
                     Triple("Preferences", R.drawable.preferences) {

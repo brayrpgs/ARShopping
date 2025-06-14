@@ -16,7 +16,7 @@ class LocalDataBaseHelper(context: Context) : SQLiteOpenHelper(
      */
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(CREATE_USERS_TABLE)
-
+        db.execSQL(CREATE_THEME_TABLE)
     }
 
 
@@ -25,6 +25,7 @@ class LocalDataBaseHelper(context: Context) : SQLiteOpenHelper(
      */
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS $USERS_TABLE")
+        db.execSQL("DROP TABLE IF EXISTS $THEME_TABLE")
         onCreate(db)
     }
 }
