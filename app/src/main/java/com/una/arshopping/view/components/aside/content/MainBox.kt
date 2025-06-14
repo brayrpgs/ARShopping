@@ -8,7 +8,6 @@ import androidx.compose.ui.tooling.preview.Preview
 fun MainBox(userId: Int, userUsername: String, userEmail: String, userAvatarUrl: String) {
 
     Box {
-
         Background()
         AsideBox(userId, userUsername, userEmail, userAvatarUrl)
 
