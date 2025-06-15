@@ -1,5 +1,6 @@
 package com.una.arshopping.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,11 +19,13 @@ class SingInViewModel : ViewModel() {
         email: String,
         password: String,
         firstName: String,
-        lastName: String
+        lastName: String,
+        context: Context
+
     ) {
         viewModelScope.launch {
             try {
-                val response = RetrofitInstance.api.createUser(
+                val response = RetrofitInstance.getInstance(context).createUser(
                     UserRequest(
                         username,
                         email,

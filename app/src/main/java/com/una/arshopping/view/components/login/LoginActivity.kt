@@ -185,7 +185,7 @@ fun Background(styles: Styles, loginViewModel: LoginViewModel) {
     var theme = gelAllTheme(context)
     Log.d("THEME_FETCH", "theme: $theme")
     var colorBackground by remember { mutableStateOf(styles.colorLightBackground) }
-    if(theme == 0){
+    if (theme == 0) {
         colorBackground = styles.colorLightBackground
         insertTheme(context, 1)
     }
@@ -195,12 +195,10 @@ fun Background(styles: Styles, loginViewModel: LoginViewModel) {
     if (theme == 1) {
         colorBackground = styles.colorLightBackground
         Log.d("THEME_SELECTED", "theme: $theme")
-    }
-    else if (theme == 2) {
+    } else if (theme == 2) {
         colorBackground = styles.colorDarkBackground
         Log.d("THEME_SELECTED", "theme: $theme")
-    }
-    else{
+    } else {
         colorBackground = styles.colorLightBackground
         Log.d("THEME_SELECTED", "theme: $theme")
     }
@@ -243,7 +241,7 @@ fun Background(styles: Styles, loginViewModel: LoginViewModel) {
             backgroundColor = colorBackground,
             event = {
                 deleteUser(context)
-                loginViewModel.validateUser(email.value, password.value)
+                loginViewModel.validateUser(email.value, password.value, context)
             },
             input = password
         )

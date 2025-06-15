@@ -1,6 +1,7 @@
 package com.una.arshopping.viewmodel
 
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,9 +16,9 @@ class ProductViewModel : ViewModel() {
     var products: LiveData<ProductResponse?> = _products
 
 
-    fun getProduct() {
+    fun getProduct(context: Context) {
         viewModelScope.launch {
-            val response = RetrofitInstance.api.getProducts()
+            val response = RetrofitInstance.getInstance(context).getProducts()
             val productResponse = response.body()
             _products.value = productResponse
         }
