@@ -23,7 +23,7 @@ class PrincipalActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         productViewModel = ViewModelProvider(this)[ProductViewModel::class.java]
-        productViewModel.getProduct()
+        productViewModel.getProduct(context = this)
         enableEdgeToEdge()
         setContent {
             MainScreen(productViewModel)

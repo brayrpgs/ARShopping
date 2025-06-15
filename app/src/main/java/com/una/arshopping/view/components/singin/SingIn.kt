@@ -4,6 +4,7 @@ import com.una.arshopping.view.components.login.textinput.TextInput
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -23,11 +24,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.una.arshopping.repository.gelAllTheme
+import com.una.arshopping.repository.insertTheme
+import com.una.arshopping.repository.updateTheme
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.login.label.Label
 import com.una.arshopping.view.components.login.themeschema.ThemeSchema
@@ -38,9 +43,14 @@ class SingIn() : ComponentActivity() {
     private lateinit var singInViewModel: SingInViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        /******************************
+         * get the view model sing in
+         */
         singInViewModel = ViewModelProvider(this)[SingInViewModel::class.java]
         val styles = Styles()
-        //alert
+        /*****************************
+         * function to observe if sign in is success
+         */
         singInViewModel.singInState.observe(this, Observer { singinSuccess ->
             if (singinSuccess) {
                 val builder = AlertDialog.Builder(this)
@@ -74,10 +84,42 @@ class SingIn() : ComponentActivity() {
 
 @Composable
 fun Background(styles: Styles, singInViewModel: SingInViewModel) {
-    var colorBackground by remember { mutableStateOf(styles.colorLightBackground) }
+    /**
+     * get the theme in local storage and set the theme
+     */
+    val context = LocalContext.current
 
     /**
-     * states
+     * get theme
+     */
+    var theme = gelAllTheme(context)
+    Log.d("THEME_FETCH", "theme: $theme")
+    var colorBackground by remember { mutableStateOf(styles.colorLightBackground) }
+    if(theme == 0){
+        colorBackground = styles.colorLightBackground
+        insertTheme(context, 1)
+    }
+    /**
+     * set the theme
+     */
+    if (theme == 1) {
+        colorBackground = styles.colorLightBackground
+        Log.d("THEME_SELECTED", "theme: $theme")
+    }
+    else if (theme == 2) {
+        colorBackground = styles.colorDarkBackground
+        Log.d("THEME_SELECTED", "theme: $theme")
+    }
+    else{
+        colorBackground = styles.colorLightBackground
+        Log.d("THEME_SELECTED", "theme: $theme")
+    }
+    Log.d("THEME_SELECTED", "colorBackground: $colorBackground")
+
+    //var colorBackground by remember { mutableStateOf(styles.colorLightBackground) }
+
+    /*******************
+     * states and data
      * */
 
 
@@ -185,20 +227,25 @@ fun Background(styles: Styles, singInViewModel: SingInViewModel) {
                     email.value,
                     password.value,
                     firstName.value,
-                    lastName.value
+                    lastName.value,
+                    context
                 )
             }
         )
         Spacer(Modifier.height(20.dp))
         ThemeSchema(
-            {
+            colorBackground = {
                 if (colorBackground == styles.colorLightBackground) {
                     colorBackground = styles.colorDarkBackground
+                    updateTheme(context, 2)
+                    theme = 2
                 } else {
                     colorBackground = styles.colorLightBackground
+                    updateTheme(context, 1)
+                    theme = 1
                 }
             },
-            colorBackground
+            backgroundColor = colorBackground
         )
     }
 }
