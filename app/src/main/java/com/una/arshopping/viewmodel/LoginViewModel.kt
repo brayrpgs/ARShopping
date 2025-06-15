@@ -1,5 +1,6 @@
 package com.una.arshopping.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,9 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.una.arshopping.model.LoginRequest
 import com.una.arshopping.model.dto.UserInfoDTO
 import com.una.arshopping.network.RetrofitInstance
-import com.una.arshopping.repository.insert
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
@@ -23,8 +21,6 @@ class LoginViewModel : ViewModel() {
     /**
      * user information
      */
-   /* private val _user = MutableStateFlow<UserInfoDTO?>(null)
-    val user: StateFlow<UserInfoDTO?> get() = _user*/
 
     private val _user = MutableLiveData<UserInfoDTO?>(null)
     val user: LiveData<UserInfoDTO?> get()= _user
@@ -34,11 +30,13 @@ class LoginViewModel : ViewModel() {
      */
     fun validateUser(
         email: String,
-        password: String
+        password: String,
+        context: Context
     ) {
         viewModelScope.launch {
             try {
-                val response = RetrofitInstance.api.login(
+
+                val response = RetrofitInstance.getInstance(context).login(
                     LoginRequest(
                         email = email,
                         password = password

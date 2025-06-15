@@ -20,6 +20,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
@@ -32,7 +33,6 @@ import com.una.arshopping.view.components.myprofile.avatarpicker.AvatarSection
 import com.una.arshopping.view.components.myprofile.button.ActionButtons
 import com.una.arshopping.view.components.myprofile.form.InputField
 import com.una.arshopping.view.components.preferences.button.GetBackButton
-import com.una.arshopping.viewmodel.LoginViewModel
 import com.una.arshopping.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 
@@ -52,7 +52,7 @@ class MyProfileActivity : ComponentActivity() {
 
 
         setContent {
-            ARShoppingTheme{
+            ARShoppingTheme {
                 MyProfileScreen(Styles(), viewModel, userId, userUsername, userEmail, userAvatarUrl)
             }
         }
@@ -61,7 +61,14 @@ class MyProfileActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyProfileScreen(styles: Styles, viewModel: UserViewModel, userId: Int, userUsername: String, userEmail: String, userAvatarUrl: String) {
+fun MyProfileScreen(
+    styles: Styles,
+    viewModel: UserViewModel,
+    userId: Int,
+    userUsername: String,
+    userEmail: String,
+    userAvatarUrl: String
+) {
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     var saveSuccess by remember { mutableStateOf<Boolean?>(null) }
@@ -85,21 +92,36 @@ fun MyProfileScreen(styles: Styles, viewModel: UserViewModel, userId: Int, userU
     // Validation states
     var usernameError by remember { mutableStateOf<String?>(null) }
     var emailError by remember { mutableStateOf<String?>(null) }
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
             Column(modifier = Modifier.background(colorBackground)) {
                 TopAppBar(
-                    title = { Text("My profile", fontWeight = FontWeight.Bold, fontFamily = styles.fontFamily) },
+                    title = {
+                        Text(
+                            "My profile",
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = styles.fontFamily
+                        )
+                    },
                     navigationIcon = { GetBackButton() },
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.Transparent)
                 )
-                Box(Modifier.fillMaxWidth().height(2.dp).background(Color.White))
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(2.dp)
+                        .background(Color.White)
+                )
             }
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState) { data ->
-                CustomNotificationSnackbar(message = data.visuals.message, isSuccess = saveSuccess == true)
+                CustomNotificationSnackbar(
+                    message = data.visuals.message,
+                    isSuccess = saveSuccess == true
+                )
             }
         }
     ) { paddingValues ->
@@ -151,14 +173,23 @@ fun MyProfileScreen(styles: Styles, viewModel: UserViewModel, userId: Int, userU
                 ActionButtons(
                     onSave = {
                         if (usernameError == null && emailError == null) {
-                            handleSave(viewModel, userId, email, username, avatarUrl, {
-                                saveSuccess = true
-                                coroutineScope.launch { snackbarHostState.showSnackbar("Data saved") }
-                                isModified = false
-                            }, {
-                                saveSuccess = false
-                                coroutineScope.launch { snackbarHostState.showSnackbar("Error saving data") }
-                            })
+                            handleSave(
+                                viewModel,
+                                userId,
+                                email,
+                                username,
+                                avatarUrl,
+                                {
+                                    saveSuccess = true
+                                    coroutineScope.launch { snackbarHostState.showSnackbar("Data saved") }
+                                    isModified = false
+                                },
+                                {
+                                    saveSuccess = false
+                                    coroutineScope.launch { snackbarHostState.showSnackbar("Error saving data") }
+                                },
+                                context = context
+                            )
                         } else {
                             coroutineScope.launch { snackbarHostState.showSnackbar("Please fix validation errors") }
                         }

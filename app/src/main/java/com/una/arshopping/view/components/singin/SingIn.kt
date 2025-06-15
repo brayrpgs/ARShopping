@@ -227,7 +227,8 @@ fun Background(styles: Styles, singInViewModel: SingInViewModel) {
                     email.value,
                     password.value,
                     firstName.value,
-                    lastName.value
+                    lastName.value,
+                    context
                 )
             }
         )

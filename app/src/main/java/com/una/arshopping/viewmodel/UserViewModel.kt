@@ -1,5 +1,6 @@
 package com.una.arshopping.viewmodel
 
+import android.content.Context
 import android.util.Log
 import com.una.arshopping.network.RetrofitInstance
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,13 +20,14 @@ class UserViewModel : ViewModel() {
         userId: Int,
         user: UserUpdateDTO,
         onSuccess: () -> Unit,
-        onError: (String) -> Unit
+        onError: (String) -> Unit,
+        context: Context
     ) {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
 
-                val updatedUser = RetrofitInstance.api.updateUser(userId, user)
+                val updatedUser = RetrofitInstance.getInstance(context).updateUser(userId, user)
 
                 Log.i("UserViewModel", "Successfully updated user with ID: ${updatedUser.id}")
                 onSuccess()
