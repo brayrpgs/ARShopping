@@ -46,6 +46,11 @@ import kotlin.jvm.java
 
 class LoginActivity : ComponentActivity() {
     /**
+     * variable theme
+     */
+    private var previousTheme = 0
+
+    /**
      * this is the viewmodel login
      */
     private lateinit var loginViewModel: LoginViewModel
@@ -80,11 +85,30 @@ class LoginActivity : ComponentActivity() {
         }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        val currentTheme = gelAllTheme(this)
+        Log.d("THEME_CURRENT", "theme: $currentTheme")
+        Log.d("THEME_PREVIOUS", "theme: $previousTheme")
+        if (currentTheme != previousTheme) {
+            previousTheme = currentTheme
+            Log.d("THEME_CHANGED", "theme: $currentTheme")
+            recreate()
+        }
+    }
+
     /**
      * on create function ,
      * initialize view model and observer login state
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+        /**
+         * set the previous theme
+         */
+        previousTheme = gelAllTheme(this)
+
+
         super.onCreate(savedInstanceState)
 
         /**
@@ -134,7 +158,7 @@ class LoginActivity : ComponentActivity() {
         setContent {
             Background(
                 styles = Styles(),
-                loginViewModel = loginViewModel
+                loginViewModel = loginViewModel,
             )
         }
 

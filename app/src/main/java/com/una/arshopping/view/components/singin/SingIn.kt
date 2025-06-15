@@ -32,6 +32,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.una.arshopping.repository.gelAllTheme
 import com.una.arshopping.repository.insertTheme
+import com.una.arshopping.repository.updateTheme
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.login.label.Label
 import com.una.arshopping.view.components.login.themeschema.ThemeSchema
@@ -232,14 +233,18 @@ fun Background(styles: Styles, singInViewModel: SingInViewModel) {
         )
         Spacer(Modifier.height(20.dp))
         ThemeSchema(
-            {
+            colorBackground = {
                 if (colorBackground == styles.colorLightBackground) {
                     colorBackground = styles.colorDarkBackground
+                    updateTheme(context, 2)
+                    theme = 2
                 } else {
                     colorBackground = styles.colorLightBackground
+                    updateTheme(context, 1)
+                    theme = 1
                 }
             },
-            colorBackground
+            backgroundColor = colorBackground
         )
     }
 }
