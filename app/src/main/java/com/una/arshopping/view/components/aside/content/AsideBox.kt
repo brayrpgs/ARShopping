@@ -23,6 +23,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.una.arshopping.R
+import com.una.arshopping.repository.gelAllTheme
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.aside.button.Button
 import com.una.arshopping.view.components.myprofile.MyProfileActivity
@@ -30,8 +31,13 @@ import com.una.arshopping.view.components.preferences.PreferencesActivity
 
 @Composable
 fun AsideBox() {
-    val styles = Styles()
     val context = LocalContext.current
+    /**************
+     * define styles global
+     */
+    val themeNumber = gelAllTheme(context)
+    val styles = Styles()
+    val fontColor = if (themeNumber == 1 || themeNumber == 0) Color.Black else Color.White
     Box(
         Modifier
             .padding(start = 5.dp, top = 20.dp)
@@ -60,7 +66,7 @@ fun AsideBox() {
                     style = TextStyle(
                         fontFamily = styles.fontFamily,
                         fontSize = 25.sp,
-                        color = Color.Black
+                        color = fontColor
                     )
                 )
 
@@ -88,11 +94,15 @@ fun AsideBox() {
                         iconId = iconId,
                         iconContentDescription = label,
                         onClick = action,
-                        contentColor = Color.Black,
+                        contentColor = fontColor,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp)
                             .padding(horizontal = 25.dp)
+                            .border(1.dp,Color.White, RoundedCornerShape(10.dp)),
+                        themeNumber = themeNumber
+
+
                     )
                 }
             }

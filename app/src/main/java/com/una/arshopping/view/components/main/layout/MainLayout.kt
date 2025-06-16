@@ -1,13 +1,9 @@
 package com.una.arshopping.view.components.main.layout
 
 import StoreLabel
-import android.transition.Fade
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.*
@@ -71,7 +67,6 @@ fun MainLayout(
                     .zIndex(2f)
             ) {
                 MainBox()
-
                 Blur(onTapOutside = {
                     isMenuOpen = false
                 })

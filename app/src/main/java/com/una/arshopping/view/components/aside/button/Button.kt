@@ -24,10 +24,10 @@ fun Button(
     text: String,
     onClick: () -> Unit,
     contentColor: Color = Color.White,
-    backgroundColor: Color = Color(0xFFB0CCDE),
     modifier: Modifier = Modifier,
     @DrawableRes iconId: Int,
-    iconContentDescription: String? = null
+    iconContentDescription: String? = null,
+    themeNumber : Int = 0
 ) {
     val styles = Styles()
     Button(
@@ -35,8 +35,8 @@ fun Button(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = backgroundColor.copy(alpha = 0.95f),
-            contentColor = contentColor
+            containerColor = if (themeNumber == 1 || themeNumber == 0) Color(0x80D9D9D9) else Color(0x80FFFFFF),
+            contentColor = contentColor,
         )
     ) {
 
