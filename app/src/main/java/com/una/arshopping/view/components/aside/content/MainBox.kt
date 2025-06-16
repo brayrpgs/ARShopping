@@ -12,7 +12,6 @@ fun MainBox() {
     Box {
         Background()
         AsideBox()
-
     }
 
 }
