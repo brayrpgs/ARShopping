@@ -33,7 +33,7 @@ import com.una.arshopping.view.components.preferences.PreferencesActivity
 fun AsideBox() {
     val context = LocalContext.current
     /**************
-     * define styles
+     * define styles global
      */
     val themeNumber = gelAllTheme(context)
     val styles = Styles()
