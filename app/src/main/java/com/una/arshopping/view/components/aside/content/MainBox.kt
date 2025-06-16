@@ -14,9 +14,3 @@ fun MainBox() {
     }
 
 }
-/*
-@Preview(showBackground = true)
-@Composable
-fun PreviewMainBox() {
-    MainBox()
-}*/
