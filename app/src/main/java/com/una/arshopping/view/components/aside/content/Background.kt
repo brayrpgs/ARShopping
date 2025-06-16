@@ -1,5 +1,4 @@
 package com.una.arshopping.view.components.aside.content
-
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,6 +23,7 @@ import com.una.arshopping.repository.gelAllTheme
 import com.una.arshopping.repository.updateTheme
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.login.themeschema.ThemeSchema
+import com.una.arshopping.view.components.main.PrincipalActivity
 
 @Composable
 fun Background() {
@@ -66,6 +66,8 @@ fun Background() {
                             updateTheme(context, 1)
                             numberTheme = 1
                         }
+                        context as PrincipalActivity
+                        context.recreate()
                     },
                     backgroundColor = colorBackground
                 )
