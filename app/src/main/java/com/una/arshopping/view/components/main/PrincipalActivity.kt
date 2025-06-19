@@ -85,6 +85,7 @@ class PrincipalActivity : ComponentActivity() {
         val products = productResponse
 
         var searchQuery by remember { mutableStateOf("") }
+        var searchStore by remember { mutableStateOf("") }
         var currentPage by remember { mutableIntStateOf(1) }
 
         fun loadPage(page: Int) {
@@ -93,20 +94,12 @@ class PrincipalActivity : ComponentActivity() {
                 context = context,
                 page = page,
                 query = searchQuery,
-                store = ""
+                store = searchStore
             )
         }
 
         LaunchedEffect(Unit) {
             loadPage(1)
-        }
-
-        fun performSearch() {
-            productViewModel.getProductsFiltered(
-                context,
-                query = if (searchQuery.isBlank()) "" else searchQuery,
-                store = ""
-            )
         }
 
         /**
@@ -127,6 +120,8 @@ class PrincipalActivity : ComponentActivity() {
                 productResponse = products,
                 query = searchQuery,
                 onQueryChange = { searchQuery = it },
+                store = searchStore,
+                onStoreChange = { searchStore = it },
                 onSearch = { loadPage(1) },
                 onPageChange = { page -> loadPage(page) }
             )

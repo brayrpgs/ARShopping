@@ -18,16 +18,30 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.una.arshopping.styles.Styles
 
 @Composable
-fun StoreLabel(name: String, font: FontFamily) {
+fun StoreLabel(
+    name: String,
+    store: String,
+    onStoreChange: (String) -> Unit,
+    onSearch: () -> Unit,
+    font: FontFamily
+) {
+
+    val isSelected = store == name
+
     TextButton(
-        onClick = {  },
+        onClick = {
+            if (!isSelected) {
+                onStoreChange(name)
+                onSearch()
+            }
+        },
         modifier = Modifier
             .height(35.dp)
             .width(81.dp),
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.textButtonColors(
-            containerColor = Color(0x80FFFFFF),
-            contentColor = Color.Black
+            containerColor = if (isSelected) Color.White else Color(0x80FFFFFF),
+            contentColor = if (isSelected) Color.Black else Color.DarkGray
         ),
         contentPadding = PaddingValues(0.dp)
     ) {
@@ -40,7 +54,7 @@ fun StoreLabel(name: String, font: FontFamily) {
                 style = TextStyle(
                     fontSize = 12.sp,
                     fontFamily = font,
-                    fontWeight = FontWeight.Normal,
+                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                     textAlign = TextAlign.Center
                 )
             )
@@ -48,9 +62,4 @@ fun StoreLabel(name: String, font: FontFamily) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewPrincipal() {
-    StoreLabel("Hola", Styles().fontFamily)
-}
 

@@ -40,6 +40,8 @@ fun MainLayout(
     productResponse: ProductResponse?,
     query: String,
     onQueryChange: (String) -> Unit,
+    store: String,
+    onStoreChange: (String) -> Unit,
     onSearch: () -> Unit,
     onPageChange: (Int) -> Unit
 ) {
@@ -128,9 +130,27 @@ fun MainLayout(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        StoreLabel("Amazon", font)
-                        StoreLabel("Alibaba", font)
-                        StoreLabel("Ebay", font)
+                        StoreLabel(
+                            "Amazon",
+                            store = store,
+                            onStoreChange = onStoreChange,
+                            onSearch = onSearch,
+                            font
+                        )
+                        StoreLabel(
+                            "Alibaba",
+                            store = store,
+                            onStoreChange = onStoreChange,
+                            onSearch = onSearch,
+                            font,
+                        )
+                        StoreLabel(
+                            "Ebay",
+                            store = store,
+                            onStoreChange = onStoreChange,
+                            onSearch = onSearch,
+                            font,
+                        )
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     ContentBox(
