@@ -1,6 +1,7 @@
 package com.una.arshopping.view.components.main.layout
 
 import StoreLabel
+import android.icu.text.StringSearch
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -35,7 +37,11 @@ import com.una.arshopping.view.components.main.components.SearchBar
 
 @Composable
 fun MainLayout(
-    productResponse: ProductResponse?
+    productResponse: ProductResponse?,
+    query: String,
+    onQueryChange: (String) -> Unit,
+    onSearch: () -> Unit,
+    onPageChange: (Int) -> Unit
 ) {
 
     val font = Styles().fontFamily
@@ -111,12 +117,15 @@ fun MainLayout(
                             .height(26.dp)
                     )
                     Spacer(modifier = Modifier.height(5.dp))
-                    SearchBar()
+                    SearchBar(
+                        query = query,
+                        onQueryChange = onQueryChange,
+                        onSearch = onSearch
+                    )
                     Spacer(modifier = Modifier.height(16.dp))
                     Row(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(30.dp),
+                            .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
                         StoreLabel("Amazon", font)
@@ -124,7 +133,10 @@ fun MainLayout(
                         StoreLabel("Ebay", font)
                     }
                     Spacer(modifier = Modifier.height(16.dp))
-                    ContentBox(productResponse)
+                    ContentBox(
+                        products = productResponse,
+                        onPageChange = onPageChange
+                    )
                 }
             }
         }

@@ -12,7 +12,8 @@ import androidx.compose.ui.Alignment
 import com.una.arshopping.model.ProductResponse
 
 @Composable
-fun ContentBox(products: ProductResponse?) {
+fun ContentBox(products: ProductResponse?, onPageChange: (Int) -> Unit) {
+
     Column(
         modifier = Modifier
             .width(350.dp)
@@ -26,14 +27,16 @@ fun ContentBox(products: ProductResponse?) {
             Pagination(
                 currentPage = pagination.currentPage,
                 totalPages = pagination.totalPages,
-                onPageClick = { page -> println("Go to page $page") }
+                onPageClick = { page ->
+                    onPageChange(page)
+                }
             )
         }
 
         Spacer(modifier = Modifier.height(10.dp))
 
         Column {
-            products?.data?.products?.chunked(3)?.forEach { rowItems ->
+            products?.data?.products?.chunked(2)?.forEach { rowItems ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -44,12 +47,12 @@ fun ContentBox(products: ProductResponse?) {
                         ProductInfoCard(
                             imageRes = product.images.firstOrNull()?.url ?: "",
                             heading = product.name,
-                            price = "${product.typeCoin} ${product.price}",
-                            description = product.name
+                            price = product.price,
+                            //description = product.name
                         )
                     }
 
-                    repeat(3 - rowItems.size) {
+                    repeat(2 - rowItems.size) {
                         Spacer(modifier = Modifier.weight(1f))
                     }
                 }

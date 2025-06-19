@@ -13,6 +13,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PATCH
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
     @POST("/api/users")
@@ -21,6 +22,16 @@ interface ApiService {
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
     @PATCH("users/{id}")
     suspend fun updateUser(@Path("id") id: Int?, @Body userDto: UserUpdateDTO): User
-    @GET("/api/products?size=9&page=1")
+    @GET("/api/products?size=4&page=1")
     suspend fun getProducts(): Response<ProductResponse>
+
+    @GET("/api/products")
+    suspend fun getProductsFiltered(
+
+        @Query("size") size: Int = 4,
+        @Query("page") page: Int = 1,
+        @Query("name") name: String? = null,
+        @Query("store") store: String? = null
+
+    ): Response<ProductResponse>
 }

@@ -11,34 +11,40 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.TextButton
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
 import com.una.arshopping.styles.Styles
 
 @Composable
 fun StoreLabel(name: String, font: FontFamily) {
-
     TextButton(
-        onClick = { /* Action */ },
+        onClick = {  },
         modifier = Modifier
-            .height(32.dp)
-            .width(81.dp)
-            .background(color = Color(0x80FFFFFF),shape = RoundedCornerShape(16.dp))
-
-
+            .height(35.dp)
+            .width(81.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = ButtonDefaults.textButtonColors(
+            containerColor = Color(0x80FFFFFF),
+            contentColor = Color.Black
+        ),
+        contentPadding = PaddingValues(0.dp)
     ) {
-
-        Text(
+        Box(
             modifier = Modifier.fillMaxSize(),
-            text = name,
-            style = TextStyle(
-                fontSize = 12.sp,
-                fontFamily = font,
-                fontWeight = FontWeight.Normal,
-                color = Color.Black,
-                textAlign = TextAlign.Center
-            ),
-        )
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = name,
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    fontFamily = font,
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center
+                )
+            )
+        }
     }
 }
 

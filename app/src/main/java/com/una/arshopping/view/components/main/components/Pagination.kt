@@ -9,8 +9,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.una.arshopping.styles.Styles
 
 
@@ -23,53 +23,57 @@ fun Pagination(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(43.dp),
-        horizontalArrangement = Arrangement.SpaceAround,
+            .height(50.dp),
+        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val pagesToShow = listOf(1, 2, 3, -1, totalPages - 1, totalPages) // -1 for ellipsis
+        val maxVisiblePages = 4
+        val startPage = maxOf(1, currentPage - maxVisiblePages / 2)
+        val endPage = minOf(totalPages, startPage + maxVisiblePages - 1)
 
-        pagesToShow.forEach { page ->
-            when {
-                page == -1 -> {
-                    Text(
-                        "...",
-                        modifier = Modifier.padding(horizontal = 8.dp),
-                        fontFamily = Styles().fontFamily,
-                        color = Color.Black
-                    )
+        if (currentPage > 1) {
+            TextButton(
+                onClick = { onPageClick(currentPage - 1) },
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text("←", fontFamily = Styles().fontFamily, color = Color.Black)
+            }
+        }
 
-                }
+        if (startPage > 1) {
+            Text("...", modifier = Modifier.padding(horizontal = 8.dp), color = Color.Gray)
+        }
 
-                page == currentPage -> {
-                    TextButton(
-                        onClick = { onPageClick(page) },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
-                        modifier = Modifier.size(43.dp, 43.dp),
-                        shape = RoundedCornerShape(8.dp)
+        for (page in startPage..endPage) {
+            val isSelected = page == currentPage
+            TextButton(
+                onClick = { onPageClick(page) },
+                shape = RoundedCornerShape(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (isSelected) Color.Black else Color.Transparent
+                ),
+                modifier = Modifier.size(42.dp, 42.dp)
+            ) {
+                Text(
+                    "$page",
+                    fontFamily = Styles().fontFamily,
+                    fontSize = 10.sp,
+                    color = if (isSelected) Color.White else Color.Black
+                )
+            }
+        }
 
-                    ) {
-                        Text(text = "$page",fontFamily = Styles().fontFamily, color = Color.White)
-                    }
-                }
+        if (endPage < totalPages) {
+            Text("...", modifier = Modifier.padding(horizontal = 8.dp), color = Color.Gray)
+        }
 
-                else -> {
-                    TextButton(
-                        onClick = { onPageClick(page) },
-                        modifier = Modifier.size(43.dp, 43.dp),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Text(text = "$page",fontFamily = Styles().fontFamily, color = Color.Black)
-                    }
-                }
+        if (currentPage < totalPages) {
+            TextButton(
+                onClick = { onPageClick(currentPage + 1) },
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text("→", fontFamily = Styles().fontFamily, color = Color.Black)
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewPrincipal() {
-    Pagination(1, 67, {})
-
 }
