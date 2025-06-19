@@ -9,10 +9,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
+import com.una.arshopping.model.Product
 import com.una.arshopping.model.ProductResponse
 
 @Composable
-fun ContentBox(products: ProductResponse?, onPageChange: (Int) -> Unit) {
+fun ContentBox(
+    products: ProductResponse?,
+    onPageChange: (Int) -> Unit,
+    selectedProducts: Map<String, Product>,
+    onProductChecked: (Product, Boolean) -> Unit
+) {
 
     Column(
         modifier = Modifier
@@ -48,7 +54,10 @@ fun ContentBox(products: ProductResponse?, onPageChange: (Int) -> Unit) {
                             imageRes = product.images.firstOrNull()?.url ?: "",
                             heading = product.name,
                             price = product.price,
-                            //description = product.name
+                            selected = selectedProducts[product.store]?.id == product.id,
+                            onCheckedChange = { checked ->
+                                onProductChecked(product, checked)
+                            }
                         )
                     }
 

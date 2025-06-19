@@ -1,7 +1,6 @@
 package com.una.arshopping.view.components.main.layout
 
 import StoreLabel
-import android.icu.text.StringSearch
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -12,7 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -25,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import com.una.arshopping.model.Product
 import com.una.arshopping.model.ProductResponse
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.aside.blur.Blur
@@ -48,6 +48,7 @@ fun MainLayout(
 
     val font = Styles().fontFamily
     var isMenuOpen by remember { mutableStateOf(false) }
+    val selectedProducts = remember { mutableStateMapOf<String, Product>() }
 
     /**
      * main layout view
@@ -155,7 +156,15 @@ fun MainLayout(
                     Spacer(modifier = Modifier.height(16.dp))
                     ContentBox(
                         products = productResponse,
-                        onPageChange = onPageChange
+                        onPageChange = onPageChange,
+                        selectedProducts = selectedProducts,
+                        onProductChecked = { product, checked ->
+                            if (checked) {
+                                selectedProducts[product.store] = product
+                            } else {
+                                selectedProducts.remove(product.store)
+                            }
+                        }
                     )
                 }
             }
