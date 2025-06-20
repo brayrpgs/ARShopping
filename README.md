@@ -30,3 +30,24 @@ Before getting started, make sure you have the following installed:
 git clone https://github.com/brayrpgs/ARShopping.git
 cd ARShopping
 ```
+## ▶️ Run the App
+
+Open the project in Android Studio
+
+Wait for Gradle sync to complete
+
+Select a device or emulator
+
+Press the Run ▶️ button to build and launch the app
+
+## 🌐 How It Works
+
+The app uses web scraping to collect product data from online retailers (e.g., eBay).
+
+Users can input product names to find the best price across sources.
+
+The login system ensures that user sessions and preferences can be maintained.
+
+⚠️ Note: Web scraping functionality may depend on the structure and accessibility of external websites.
+
+## 📽️ Demo Video
