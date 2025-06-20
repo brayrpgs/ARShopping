@@ -29,4 +29,4 @@ Before getting started, make sure you have the following installed:
 ```bash
 git clone https://github.com/brayrpgs/ARShopping.git
 cd ARShopping
-´´´
+```
