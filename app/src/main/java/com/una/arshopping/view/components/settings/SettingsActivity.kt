@@ -12,7 +12,7 @@ class SettingsActivity : ComponentActivity() {
      * --fonts
      * --colors fonts
      * --functions onClicks and logics
-     */
+     *********************************/
 
     /**
      * gets the theme
@@ -36,4 +36,5 @@ class SettingsActivity : ComponentActivity() {
             }
         }
     }
+
 }
