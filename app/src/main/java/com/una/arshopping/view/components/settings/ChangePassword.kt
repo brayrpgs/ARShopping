@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -16,14 +18,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.una.arshopping.styles.Styles
+import com.una.arshopping.viewmodel.UserViewModel
 
 @Composable
 fun ChangePassword(
-    colorLabel: Color = Color.Black
+    colorLabel: Color = Color.Black,
+    viewModel: UserViewModel
 ) {
+    val context = LocalContext.current
     Text(
         text = "Change Password",
         fontSize = 22.sp,
@@ -40,6 +47,11 @@ fun ChangePassword(
      */
     var password by remember { mutableStateOf("") }
     var isValidPassword by remember { mutableStateOf(false) }
+
+    /**
+     * alert state
+     */
+
     OutlinedTextField(
         onValueChange = {
             password = it
@@ -66,7 +78,20 @@ fun ChangePassword(
             focusedBorderColor = colorLabel,
             unfocusedBorderColor = colorLabel
         ),
-        isError = isValidPassword
+        isError = isValidPassword,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                if (isValidPassword) {
+                    viewModel.changePassword(
+                        password = password,
+                        context = context,
+                        onSuccess = { Log.d("Password", "todo bien ") },
+                        onError = { Log.d("Password", "todo mal") }
+                    )
+                }
+            }
+        ),
     )
 
     if (isValidPassword) {
@@ -86,3 +111,4 @@ fun ChangePassword(
     }
 
 }
+

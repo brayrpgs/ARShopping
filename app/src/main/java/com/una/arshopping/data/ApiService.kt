@@ -17,6 +17,8 @@ import retrofit2.http.Path
 interface ApiService {
     @POST("/api/users")
     suspend fun createUser(@Body user: UserRequest): Response<ResponseBody>
+    @PATCH("/api/users/{id}")
+    suspend fun changePassword(@Path("id") id: Int?,@Body user: User): Response<ResponseBody>
     @POST("/auth/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
     @PATCH("users/{id}")
