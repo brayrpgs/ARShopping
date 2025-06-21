@@ -18,9 +18,11 @@ import androidx.compose.ui.draw.shadow
 
 
 @Composable
-fun SearchBar() {
-    var query by remember { mutableStateOf("") }
-
+fun SearchBar(
+    query: String,
+    onQueryChange: (String) -> Unit,
+    onSearch: () -> Unit
+) {
     Box(
         modifier = Modifier
             .shadow(3.dp, spotColor = Color(0x40000000), ambientColor = Color(0x40000000))
@@ -38,11 +40,11 @@ fun SearchBar() {
         ) {
             TextField(
                 value = query,
-                onValueChange = { query = it },
+                onValueChange = { onQueryChange(it) },
                 placeholder = { Text("Search...") },
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        Log.e("Contexto","Buscando: $query")
+                        onSearch()
                     }
                 ),
                 modifier = Modifier
@@ -59,9 +61,7 @@ fun SearchBar() {
             )
 
             IconButton(
-                onClick = {
-                    Log.e("ContextoIcono","Buscando: $query") //Search product here you can modify the input for the web scarpping
-                }
+                onClick = { onSearch() }
             ) {
                 Icon(
                     imageVector = Icons.Default.Search,
@@ -72,5 +72,6 @@ fun SearchBar() {
         }
     }
 }
+
 
 
