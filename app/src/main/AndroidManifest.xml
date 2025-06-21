@@ -39,8 +39,10 @@
             </intent-filter>
             <intent-filter android:label="auth">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="auth"
                     android:scheme="arshopping" />
@@ -48,6 +50,9 @@
         </activity>
         <activity
             android:name=".view.components.singin.SingIn"
+            android:exported="true" />
+        <activity
+            android:name=".view.components.settings.SettingsActivity"
             android:exported="true" />
     </application>
 
