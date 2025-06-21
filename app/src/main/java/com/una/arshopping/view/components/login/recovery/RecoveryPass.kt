@@ -1,6 +1,5 @@
 package com.una.arshopping.view.components.login.recovery
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -45,7 +44,7 @@ fun RecoveryPass(css: Styles, backgroundColor : Brush, create : () -> Unit = {},
                 text = "Forgot password?",
                 fontFamily = css.fontFamily,
                 color = color
-            );
+            )
         }
         TextButton(
             onClick = {
@@ -58,7 +57,7 @@ fun RecoveryPass(css: Styles, backgroundColor : Brush, create : () -> Unit = {},
                 fontFamily = css.fontFamily,
                 color = color,
                 fontSize = 13.sp
-            );
+            )
         }
     }
 }

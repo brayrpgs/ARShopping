@@ -21,7 +21,7 @@ import com.una.arshopping.view.components.preferences.notifications.Notification
 import com.una.arshopping.view.components.preferences.permissions.PermissionsBox
 
 @Composable
-fun PreferencesBox(styles: Styles){
+fun PreferencesBox(styles: Styles, theme: Int = 1){
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -32,14 +32,14 @@ fun PreferencesBox(styles: Styles){
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            GetBackButton()
+            GetBackButton(theme)
 
             Text(
                 text = "Preferences",
                 style = TextStyle(
                     fontFamily = styles.fontFamily,
                     fontSize = 28.sp,
-                    color = Color.Black
+                    color = if (theme == 2) Color.White else Color.Black
                 ),
                 modifier = Modifier.padding(start = 12.dp)
             )
@@ -51,14 +51,14 @@ fun PreferencesBox(styles: Styles){
             style = TextStyle(
                 fontFamily = styles.fontFamily,
                 fontSize = 28.sp,
-                color = Color.Black,
+                color = if (theme == 2) Color.White else Color.Black,
                 fontWeight = FontWeight.Bold
 
             ),
             modifier = Modifier.padding(start = 12.dp)
         )
 
-        NotificationBox(styles)
+        NotificationBox(styles, theme)
 
         Spacer(modifier = Modifier.height(30.dp))
         Text(
@@ -66,13 +66,13 @@ fun PreferencesBox(styles: Styles){
             style = TextStyle(
                 fontFamily = styles.fontFamily,
                 fontSize = 28.sp,
-                color = Color.Black,
+                color = if (theme == 2) Color.White else Color.Black,
                 fontWeight = FontWeight.Bold
 
             ),
             modifier = Modifier.padding(start = 12.dp)
         )
 
-        PermissionsBox(styles)
+        PermissionsBox(styles, theme)
     }
 }

@@ -106,7 +106,7 @@ fun MainLayout(
                     }
 
                     Text(
-                        text = "ShoppingAR Engine Search",
+                        text = "Shopping Engine Search",
                         style = TextStyle(
                             fontSize = 16.sp,
                             lineHeight = 40.sp,
@@ -176,7 +176,7 @@ fun MainLayout(
                 .fillMaxSize(),
             contentAlignment = Alignment.BottomCenter
         ) {
-            CompareButton(font = Styles().fontFamily)
+            CompareButton(selectedProducts)
         }
     }
 

@@ -10,7 +10,7 @@ import androidx.compose.runtime.setValue
 import com.una.arshopping.styles.Styles
 
 @Composable
-fun NotificationBox(styles: Styles){
+fun NotificationBox(styles: Styles, theme: Int=1){
 
     var statusBarEnabled by remember { mutableStateOf(false) }
     var headsUpEnabled by remember { mutableStateOf(false) }
@@ -21,21 +21,24 @@ fun NotificationBox(styles: Styles){
             styles,
             label = "Status bar",
             isChecked = statusBarEnabled,
-            onCheckedChange = { statusBarEnabled = it }
+            onCheckedChange = { statusBarEnabled = it },
+            theme
         )
 
         ToggleItem(
             styles,
             label = "Heads up",
             isChecked = headsUpEnabled,
-            onCheckedChange = { headsUpEnabled = it }
+            onCheckedChange = { headsUpEnabled = it },
+            theme
         )
 
         ToggleItem(
             styles,
             label = "Lock screen",
             isChecked = lockScreenEnabled,
-            onCheckedChange = { lockScreenEnabled = it }
+            onCheckedChange = { lockScreenEnabled = it },
+            theme
         )
 
     }

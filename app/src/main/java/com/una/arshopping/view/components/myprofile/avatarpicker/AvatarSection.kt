@@ -27,7 +27,8 @@ fun AvatarSection(
     avatarUrls: List<String>,
     onAvatarSelected: (String) -> Unit,
     showPicker: Boolean,
-    setShowPicker: (Boolean) -> Unit
+    setShowPicker: (Boolean) -> Unit,
+    theme : Int = 2
 ) {
     val finalAvatar = if (avatarUrl.isNotEmpty()) avatarUrl else avatarUrls.first()
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
@@ -40,7 +41,7 @@ fun AvatarSection(
         }
         Spacer(modifier = Modifier.width(12.dp))
         IconButton(onClick = { setShowPicker(true) }, modifier = Modifier.size(32.dp)) {
-            Icon(Icons.Default.Edit, contentDescription = "Edit Avatar", tint = Color.Black, modifier = Modifier.size(16.dp))
+            Icon(Icons.Default.Edit, contentDescription = "Edit Avatar", tint = if (theme == 2) Color.White else Color.Black, modifier = Modifier.size(16.dp))
         }
     }
 

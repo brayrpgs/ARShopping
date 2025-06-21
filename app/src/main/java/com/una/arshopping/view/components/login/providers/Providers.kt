@@ -1,7 +1,7 @@
 package com.una.arshopping.view.components.login.providers
 
+import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.una.arshopping.R
 import com.una.arshopping.repository.deleteUser
+import androidx.core.net.toUri
 
 @Composable
 fun Providers() {
@@ -44,8 +45,9 @@ fun Providers() {
             ),
             onClick = {
                 deleteUser(context)
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://10.0.2.2:3000/auth/google"))
+                val intent = Intent(Intent.ACTION_VIEW, "http://10.0.2.2:3000/auth/google".toUri())
                 context.startActivity(intent)
+                (context as? Activity)?.finish()
             },
             modifier = Modifier
                 .width(53.dp)
@@ -70,8 +72,9 @@ fun Providers() {
             ),
             onClick = {
                 deleteUser(context)
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://10.0.2.2:3000/auth/github"))
+                val intent = Intent(Intent.ACTION_VIEW, "http://10.0.2.2:3000/auth/github".toUri())
                 context.startActivity(intent)
+                (context as? Activity)?.finish()
             },
             modifier = Modifier
                 .width(53.dp)
@@ -94,9 +97,9 @@ fun Providers() {
             ),
             onClick = {
                 deleteUser(context)
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://10.0.2.2:3000/auth/facebook"))
+                val intent = Intent(Intent.ACTION_VIEW, "http://10.0.2.2:3000/auth/facebook".toUri())
                 context.startActivity(intent)
-
+                (context as? Activity)?.finish()
             },
             modifier = Modifier
                 .width(53.dp)

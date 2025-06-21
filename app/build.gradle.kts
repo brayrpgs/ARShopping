@@ -67,6 +67,8 @@ dependencies {
     implementation(libs.coil.compose)
     implementation (libs.androidx.lifecycle.livedata.ktx)
     implementation (libs.androidx.runtime.livedata)
+    implementation (libs.accompanist.pager)
+    implementation (libs.accompanist.pager.indicators)
 
 
 

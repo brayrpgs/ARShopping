@@ -9,7 +9,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import com.una.arshopping.repository.gelAllTheme
 import com.una.arshopping.styles.Styles
-import com.una.arshopping.view.components.login.LoginActivity
 import com.una.arshopping.view.components.main.PrincipalActivity
 import com.una.arshopping.viewmodel.UserViewModel
 
@@ -27,8 +26,9 @@ class SettingsActivity : ComponentActivity() {
     /**
      * gets the theme
      */
-
-
+    override fun onDestroy() {
+        super.onDestroy()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         /**
@@ -47,6 +47,7 @@ class SettingsActivity : ComponentActivity() {
                         onclick = {
                             val intent = Intent(this, PrincipalActivity::class.java)
                             this.startActivity(intent)
+                            finish()
                         },
                         colorContent = if (themeNumber == 1) Color.Black else Color.White,
                     )

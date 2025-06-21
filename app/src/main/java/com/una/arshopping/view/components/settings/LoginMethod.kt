@@ -1,5 +1,6 @@
 package com.una.arshopping.view.components.settings
 
+import android.app.Activity
 import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -45,6 +46,7 @@ fun LoginMethod(
             deleteUser(context)
             val intent = Intent(Intent.ACTION_VIEW, "http://10.0.2.2:3000/auth/facebook".toUri())
             context.startActivity(intent)
+            (context as? Activity)?.finish()
         },
         modifier = Modifier
             .offset(0.dp, 235.dp)
@@ -79,6 +81,7 @@ fun LoginMethod(
             deleteUser(context)
             val intent = Intent(Intent.ACTION_VIEW, "http://10.0.2.2:3000/auth/github".toUri())
             context.startActivity(intent)
+            (context as? Activity)?.finish()
         },
         modifier = Modifier
             .offset(0.dp, 295.dp)
@@ -114,6 +117,7 @@ fun LoginMethod(
             deleteUser(context)
             val intent = Intent(Intent.ACTION_VIEW, "http://10.0.2.2:3000/auth/google".toUri())
             context.startActivity(intent)
+            (context as? Activity)?.finish()
         },
         modifier = Modifier
             .offset(0.dp, 355.dp)

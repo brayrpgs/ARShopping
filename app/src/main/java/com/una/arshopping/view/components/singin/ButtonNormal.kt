@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,7 +28,6 @@ fun ButtonNormal(text: String, backgroundColor: Brush, createUser: () -> Unit = 
             .background(color = Color(0x33D9D9D9), shape = RoundedCornerShape(size = 25.dp)),
         shape = RoundedCornerShape(25.dp),
         border = BorderStroke(width = 1.dp, color = Color.White)
-
     ) {
         Text(
             text,

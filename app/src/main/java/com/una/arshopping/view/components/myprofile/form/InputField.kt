@@ -15,10 +15,16 @@ fun InputField(
     onValueChange: (String) -> Unit,
     label: String,
     errorMessage: String?,
-    leadingIcon: @Composable (() -> Unit)? = null
+    leadingIcon: @Composable (() -> Unit)? = null,
+    theme: Int=1
 ) {
     Column(modifier = modifier) {
-        Text(label, modifier = Modifier.align(Alignment.Start))
+        Text(
+            text = label,
+            modifier = Modifier.align(Alignment.Start),
+            color = if (theme == 2) Color.White else MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.bodyMedium
+        )
         Spacer(modifier = Modifier.height(4.dp))
         OutlinedTextField(
             value = value,
@@ -26,12 +32,29 @@ fun InputField(
             modifier = modifier.fillMaxWidth(),
             leadingIcon = leadingIcon,
             singleLine = true,
-            isError = errorMessage != null
+            isError = errorMessage != null,
+            colors = if (theme == 2) {
+                OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color.White,
+                    unfocusedBorderColor = Color.White,
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    cursorColor = Color.White,
+                    errorBorderColor = Color.Red,
+                    focusedLabelColor = Color.White,
+                    unfocusedLabelColor = Color.White
+                )
+            } else {
+                OutlinedTextFieldDefaults.colors()
+            }
         )
         if (errorMessage != null) {
             Spacer(modifier = Modifier.height(4.dp))
-            Text(errorMessage, color = Color.Red, style = MaterialTheme.typography.bodySmall)
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+                style = MaterialTheme.typography.bodySmall
+            )
         }
     }
 }
-

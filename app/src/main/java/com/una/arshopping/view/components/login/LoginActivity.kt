@@ -1,5 +1,6 @@
 package com.una.arshopping.view.components.login
 
+import android.app.Activity
 import com.una.arshopping.view.components.login.textinput.TextInput
 import android.app.AlertDialog
 import android.content.Intent
@@ -40,6 +41,7 @@ import com.una.arshopping.view.components.login.providers.Providers
 import com.una.arshopping.view.components.login.recovery.RecoveryPass
 import com.una.arshopping.view.components.login.themeschema.ThemeSchema
 import com.una.arshopping.view.components.main.PrincipalActivity
+import com.una.arshopping.view.components.recover_password.RecoverPasswordEmailActivity
 import com.una.arshopping.view.components.singin.SingIn
 import com.una.arshopping.viewmodel.LoginViewModel
 import kotlin.jvm.java
@@ -82,6 +84,7 @@ class LoginActivity : ComponentActivity() {
             insert(this, user)
             val intent = Intent(this, PrincipalActivity::class.java)
             this.startActivity(intent)
+            finish()
         }
     }
 
@@ -129,6 +132,7 @@ class LoginActivity : ComponentActivity() {
                 }
                 val intent = Intent(this, PrincipalActivity::class.java)
                 this.startActivity(intent)
+                finish()
             } else {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("Login")
@@ -169,7 +173,12 @@ class LoginActivity : ComponentActivity() {
         if (user.isNotEmpty()) {
             val intent = Intent(this, PrincipalActivity::class.java)
             this.startActivity(intent)
+            finish()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }
 
@@ -218,7 +227,7 @@ fun Background(styles: Styles, loginViewModel: LoginViewModel) {
         Spacer(Modifier.height(27.dp))
         ImageCover()
         Spacer(Modifier.height(26.dp))
-        Label(styles, text = "Shopping AR", backgroundColor = colorBackground)
+        Label(styles, text = "Shopping Engine Search", backgroundColor = colorBackground)
         Spacer(Modifier.height(54.dp))
         Label(styles, text = "Log In", backgroundColor = colorBackground)
         Spacer(Modifier.height(6.dp))
@@ -252,9 +261,13 @@ fun Background(styles: Styles, loginViewModel: LoginViewModel) {
             create = {
                 val intent = Intent(context, SingIn::class.java)
                 context.startActivity(intent)
+                (context as? Activity)?.finish()
+
             },
             forgot = {
-
+                val intent = Intent(context, RecoverPasswordEmailActivity::class.java)
+                context.startActivity(intent)
+                (context as? Activity)?.finish()
             }
         )
         Spacer(Modifier.height(7.dp))
