@@ -21,7 +21,8 @@ fun ToggleItem(
     styles: Styles,
     label: String,
     isChecked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
+    theme: Int=1
 ) {
     Row(
         modifier = Modifier
@@ -35,7 +36,8 @@ fun ToggleItem(
             style = TextStyle(
                 fontFamily = styles.fontFamily,
                 fontSize = 22.sp
-            )
+            ),
+            color = if (theme==2) Color.White else Color.Black
         )
         Switch(
             checked = isChecked,

@@ -54,6 +54,12 @@
         <activity
             android:name=".view.components.settings.SettingsActivity"
             android:exported="true" />
+        <activity
+            android:name=".view.components.recover_password.RecoverPasswordEmailActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.components.recover_password.RecoverPasswordOTPActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -40,6 +40,7 @@ import com.una.arshopping.view.components.login.providers.Providers
 import com.una.arshopping.view.components.login.recovery.RecoveryPass
 import com.una.arshopping.view.components.login.themeschema.ThemeSchema
 import com.una.arshopping.view.components.main.PrincipalActivity
+import com.una.arshopping.view.components.recover_password.RecoverPasswordEmailActivity
 import com.una.arshopping.view.components.singin.SingIn
 import com.una.arshopping.viewmodel.LoginViewModel
 import kotlin.jvm.java
@@ -254,7 +255,8 @@ fun Background(styles: Styles, loginViewModel: LoginViewModel) {
                 context.startActivity(intent)
             },
             forgot = {
-
+                val intent = Intent(context, RecoverPasswordEmailActivity::class.java)
+                context.startActivity(intent)
             }
         )
         Spacer(Modifier.height(7.dp))

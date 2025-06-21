@@ -1,4 +1,5 @@
-package com.una.arshopping.view.components.preferences.button
+package com.una.arshopping.view.components.recover_password.button
+
 import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,26 +17,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.una.arshopping.R
-import com.una.arshopping.view.components.main.PrincipalActivity
 
 @Composable
-fun GetBackButton(
-    theme: Int = 1
-){
+fun GoBackButton(targetActivity: Class<*>, theme: Int=1) {
     val context = LocalContext.current
     Box(
         contentAlignment = Alignment.Center
     ) {
         FilledIconButton(
             onClick = {
-                val intent = Intent(context, PrincipalActivity::class.java)
+                val intent = Intent(context, targetActivity)
                 context.startActivity(intent)
             },
             modifier = Modifier
                 .size(30.dp)
                 .width(60.dp)
                 .height(60.dp),
-
             colors = IconButtonDefaults.filledIconButtonColors(
                 containerColor = Color.Transparent
             )
@@ -43,7 +40,7 @@ fun GetBackButton(
             Icon(
                 painter = painterResource(id = R.drawable.arrow_back),
                 contentDescription = "Get back",
-                tint = if (theme == 2) Color.White else Color.Black,
+                tint = if (theme==2) Color.White else Color.Black,
                 modifier = Modifier
                     .fillMaxSize(),
             )

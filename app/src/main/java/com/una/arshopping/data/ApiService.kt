@@ -6,6 +6,9 @@ import okhttp3.ResponseBody
 import com.una.arshopping.model.LoginResponse
 import com.una.arshopping.model.ProductResponse
 import com.una.arshopping.model.User
+import com.una.arshopping.model.UserOTPRequest
+import com.una.arshopping.model.UserResponse
+import com.una.arshopping.model.UserValidateOTPRequest
 import com.una.arshopping.model.dto.UserUpdateDTO
 import retrofit2.Response
 import retrofit2.http.Body
@@ -14,6 +17,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PATCH
 import retrofit2.http.Path
+import retrofit2.http.Query
 import retrofit2.http.Query
 
 interface ApiService {
@@ -31,9 +35,20 @@ interface ApiService {
 
     @PATCH("users/{id}")
     suspend fun updateUser(@Path("id") id: Int?, @Body userDto: UserUpdateDTO): User
+    @GET("/api/users")
+    suspend fun getUserByEmail(
+        @Query("size") size: Int,
+        @Query("page") page: Int,
+        @Query("email") email: String
+    ): Response<UserResponse>
+    @GET("/api/products?size=9&page=1")
 
     @GET("/api/products?size=4&page=1")
     suspend fun getProducts(): Response<ProductResponse>
+    @POST("/api/users/recovery-password")
+    suspend fun requestOTP(@Body user: UserOTPRequest): Response<ResponseBody>
+    @POST("/api/users/confirm-recovery-password")
+    suspend fun validateOTP(@Body user: UserValidateOTPRequest): Response<ResponseBody>
 
     @GET("/api/products")
     suspend fun getProductsFiltered(

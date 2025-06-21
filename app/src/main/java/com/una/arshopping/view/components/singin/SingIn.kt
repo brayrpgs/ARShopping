@@ -11,9 +11,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -34,9 +36,11 @@ import com.una.arshopping.repository.gelAllTheme
 import com.una.arshopping.repository.insertTheme
 import com.una.arshopping.repository.updateTheme
 import com.una.arshopping.styles.Styles
+import com.una.arshopping.view.components.login.LoginActivity
 import com.una.arshopping.view.components.login.label.Label
 import com.una.arshopping.view.components.login.themeschema.ThemeSchema
 import com.una.arshopping.view.components.main.PrincipalActivity
+import com.una.arshopping.view.components.recover_password.button.GoBackButton
 import com.una.arshopping.viewmodel.SingInViewModel
 
 class SingIn() : ComponentActivity() {
@@ -53,6 +57,13 @@ class SingIn() : ComponentActivity() {
          */
         singInViewModel.singInState.observe(this, Observer { singinSuccess ->
             if (singinSuccess) {
+                val email = singInViewModel.getEmail()
+                if (email != null) {
+                    singInViewModel.recoverCreatedUser(email, this)
+                } else {
+                    Log.e("SingIn", "No email found to recover user")
+                }
+
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("Sing in")
                 builder.setMessage("Sing in successful. Welcome!")
@@ -147,7 +158,15 @@ fun Background(styles: Styles, singInViewModel: SingInViewModel) {
 
     ) {
         Spacer(Modifier.height(104.dp))
-        Label(styles = styles, text = "Sign In", backgroundColor = colorBackground)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            GoBackButton(LoginActivity::class.java)
+            Spacer(Modifier.width(12.dp))
+            Label(styles = styles, text = "Sign In", backgroundColor = colorBackground)
+        }
+
         Spacer(Modifier.height(42.dp))
         TextInput(
             styles = styles,
@@ -222,6 +241,7 @@ fun Background(styles: Styles, singInViewModel: SingInViewModel) {
         ButtonNormal(
             "Create Account", colorBackground,
             createUser = {
+                singInViewModel.setEmail(email.value) // save entered email
                 singInViewModel.createUser(
                     user.value,
                     email.value,
