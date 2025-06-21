@@ -1,5 +1,6 @@
 package com.una.arshopping.view.components.myprofile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -26,34 +27,54 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.una.arshopping.common.*
+import com.una.arshopping.repository.deleteUser
+import com.una.arshopping.repository.getAllUsers
+import com.una.arshopping.repository.gelAllTheme
+import com.una.arshopping.repository.insertTheme
+import com.una.arshopping.repository.updateTheme
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.alerts.CustomNotificationSnackbar
+import com.una.arshopping.view.components.login.LoginActivity
+import com.una.arshopping.view.components.main.PrincipalActivity
 import com.una.arshopping.view.components.main.ui.theme.ARShoppingTheme
 import com.una.arshopping.view.components.myprofile.avatarpicker.AvatarSection
 import com.una.arshopping.view.components.myprofile.button.ActionButtons
 import com.una.arshopping.view.components.myprofile.form.InputField
 import com.una.arshopping.view.components.preferences.button.GetBackButton
+import com.una.arshopping.view.components.login.themeschema.ThemeSchema
+import com.una.arshopping.viewmodel.SingInViewModel
 import com.una.arshopping.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 
 /**
- * Activity displaying the user profile screen. It receives user data via Intent extras
+ * Activity displaying the user profile screen. It recovers logged in user via local db
  * and injects it into the Composable screen.
  */
 class MyProfileActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel = UserViewModel()
+        val styles = Styles()
 
-        val userId = intent.getIntExtra("USER_ID", -1)
-        val userUsername = intent.getStringExtra("USER_USERNAME") ?: ""
-        val userEmail = intent.getStringExtra("USER_EMAIL") ?: ""
-        val userAvatarUrl = intent.getStringExtra("USER_AVATAR_URL") ?: ""
+        // Validate that user has been recovered correctly
+        val user = getAllUsers(this)
+        if (user.isEmpty()) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
 
+        val userId = user[0].id
+        val userUsername = user[0].username
+        val userEmail = user[0].email
+        val userAvatarUrl = user[0].avatarUrl
 
         setContent {
             ARShoppingTheme {
-                MyProfileScreen(Styles(), viewModel, userId, userUsername, userEmail, userAvatarUrl)
+                if (userId != null) {
+                    MyProfileScreen(styles, viewModel, userId, userUsername, userEmail, userAvatarUrl ?: "")
+                }
             }
         }
     }
@@ -72,7 +93,23 @@ fun MyProfileScreen(
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     var saveSuccess by remember { mutableStateOf<Boolean?>(null) }
+
+    // Theme handling
+    val context = LocalContext.current
+    var theme by remember { mutableStateOf(gelAllTheme(context)) }
     var colorBackground by remember { mutableStateOf(styles.colorLightBackground) }
+
+    // Set initial theme
+    if (theme == 0) {
+        colorBackground = styles.colorLightBackground
+        theme = 1
+    } else if (theme == 1) {
+        colorBackground = styles.colorLightBackground
+    } else if (theme == 2) {
+        colorBackground = styles.colorDarkBackground
+    } else {
+        colorBackground = styles.colorLightBackground
+    }
 
     val avatarUrls = listOf(
         "https://img.freepik.com/free-psd/bunny-emoji-icon-rendering_23-2151126085.jpg",
@@ -92,7 +129,6 @@ fun MyProfileScreen(
     // Validation states
     var usernameError by remember { mutableStateOf<String?>(null) }
     var emailError by remember { mutableStateOf<String?>(null) }
-    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -102,10 +138,11 @@ fun MyProfileScreen(
                         Text(
                             "My profile",
                             fontWeight = FontWeight.Bold,
-                            fontFamily = styles.fontFamily
+                            fontFamily = styles.fontFamily,
+                            color = if (theme == 2) Color.White else Color.Black,
                         )
                     },
-                    navigationIcon = { GetBackButton() },
+                    navigationIcon = { GetBackButton(theme = theme) },
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.Transparent)
                 )
                 Box(
@@ -133,13 +170,15 @@ fun MyProfileScreen(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(50.dp))
 
             // 1. Avatar image with edit icon
             AvatarSection(avatarUrl, avatarUrls, onAvatarSelected = {
                 avatarUrl = it
                 isModified = true
-            }, showPicker = showImagePicker, setShowPicker = { showImagePicker = it })
+            }, showPicker = showImagePicker, setShowPicker = { showImagePicker = it }, theme = theme)
+
+            Spacer(modifier = Modifier.height(40.dp))
 
             // 2. Username input field with validation
             InputField(
@@ -149,10 +188,13 @@ fun MyProfileScreen(
                     isModified = true
                     usernameError = validateUsername(it)
                 },
+                theme = theme,
                 label = "Username",
                 errorMessage = usernameError,
-                leadingIcon = { Icon(Icons.Default.AccountCircle, contentDescription = null) }
+                leadingIcon = { Icon(Icons.Default.AccountCircle, contentDescription = null, tint = if (theme == 2) Color.White else Color.Black) }
             )
+
+            Spacer(modifier = Modifier.height(20.dp))
 
             // 3. Email input field with validation
             InputField(
@@ -163,11 +205,14 @@ fun MyProfileScreen(
                     emailError = validateEmail(it)
                 },
                 label = "Email",
+                theme = theme,
                 errorMessage = emailError,
-                leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) }
+                leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, tint = if (theme == 2) Color.White else Color.Black) }
             )
 
-            // 4. Action buttons shown only if data is modified
+            Spacer(modifier = Modifier.height(20.dp))
+
+            // 5. Action buttons shown only if data is modified
             if (isModified) {
                 Spacer(modifier = Modifier.weight(1f))
                 ActionButtons(
@@ -178,7 +223,7 @@ fun MyProfileScreen(
                                 userId,
                                 email,
                                 username,
-                                avatarUrl,
+                                if (avatarUrl.isBlank()) null else avatarUrl,
                                 {
                                     saveSuccess = true
                                     coroutineScope.launch { snackbarHostState.showSnackbar("Data saved") }

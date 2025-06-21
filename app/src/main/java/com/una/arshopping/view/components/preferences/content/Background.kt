@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.una.arshopping.styles.Styles
 
 @Composable
-fun Background(styles: Styles){
+fun Background(styles: Styles, theme: Int=1){
     Box(
         Modifier
             //.shadow(elevation = 3.dp, spotColor = Color(0x40000000), ambientColor = Color(0x40000000))
@@ -24,6 +24,6 @@ fun Background(styles: Styles){
             .height(875.dp)
             .background(color = Color(0x1A000000), shape = RoundedCornerShape(size = 24.dp))
     ) {
-        PreferencesBox(styles)
+        PreferencesBox(styles, theme)
     }
 }

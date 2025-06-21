@@ -2,7 +2,9 @@ package com.una.arshopping.common
 
 
 import android.content.Context
+import com.una.arshopping.model.User
 import com.una.arshopping.model.dto.UserUpdateDTO
+import com.una.arshopping.repository.updateUser
 import com.una.arshopping.viewmodel.UserViewModel
 
 // Save handler: sends update request to ViewModel and invokes result callbacks
@@ -11,13 +13,15 @@ fun handleSave(
     userId: Int,
     email: String,
     username: String,
-    avatarUrl: String,
+    avatarUrl: String?,
     onSuccess: () -> Unit,
     onError: (String) -> Unit,
     context: Context
 ) {
     val user = UserUpdateDTO(email = email, username = username, avatarUrl = avatarUrl)
     viewModel.updateUser(userId, user, onSuccess, onError, context)
+    val localUser = User(userId, email, username, avatarUrl,"", "")
+    updateUser(context, localUser)
 }
 
 // Cancel handler: resets input fields to original values

@@ -10,7 +10,7 @@ import androidx.compose.runtime.setValue
 import com.una.arshopping.styles.Styles
 
 @Composable
-fun PermissionsBox(styles: Styles){
+fun PermissionsBox(styles: Styles, theme: Int=1){
 
     var storage by remember { mutableStateOf(false) }
     var camera by remember { mutableStateOf(false) }
@@ -21,21 +21,24 @@ fun PermissionsBox(styles: Styles){
             styles,
             label = "Storage",
             isChecked = storage,
-            onCheckedChange = { storage = it }
+            onCheckedChange = { storage = it },
+            theme
         )
 
         ToggleItem(
             styles,
             label = "Camera",
             isChecked = camera,
-            onCheckedChange = { camera = it }
+            onCheckedChange = { camera = it },
+            theme
         )
 
         ToggleItem(
             styles,
             label = "Microphone",
             isChecked = microphone,
-            onCheckedChange = { microphone = it }
+            onCheckedChange = { microphone = it },
+            theme
         )
 
     }
