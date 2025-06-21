@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -23,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import com.una.arshopping.model.Product
 import com.una.arshopping.model.ProductResponse
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.aside.blur.Blur
@@ -35,11 +37,18 @@ import com.una.arshopping.view.components.main.components.SearchBar
 
 @Composable
 fun MainLayout(
-    productResponse: ProductResponse?
+    productResponse: ProductResponse?,
+    query: String,
+    onQueryChange: (String) -> Unit,
+    store: String,
+    onStoreChange: (String) -> Unit,
+    onSearch: () -> Unit,
+    onPageChange: (Int) -> Unit
 ) {
 
     val font = Styles().fontFamily
     var isMenuOpen by remember { mutableStateOf(false) }
+    val selectedProducts = remember { mutableStateMapOf<String, Product>() }
 
     /**
      * main layout view
@@ -111,20 +120,52 @@ fun MainLayout(
                             .height(26.dp)
                     )
                     Spacer(modifier = Modifier.height(5.dp))
-                    SearchBar()
+                    SearchBar(
+                        query = query,
+                        onQueryChange = onQueryChange,
+                        onSearch = onSearch
+                    )
                     Spacer(modifier = Modifier.height(16.dp))
                     Row(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(30.dp),
+                            .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        StoreLabel("Amazon", font)
-                        StoreLabel("Alibaba", font)
-                        StoreLabel("Ebay", font)
+                        StoreLabel(
+                            "Amazon",
+                            store = store,
+                            onStoreChange = onStoreChange,
+                            onSearch = onSearch,
+                            font
+                        )
+                        StoreLabel(
+                            "Alibaba",
+                            store = store,
+                            onStoreChange = onStoreChange,
+                            onSearch = onSearch,
+                            font,
+                        )
+                        StoreLabel(
+                            "Ebay",
+                            store = store,
+                            onStoreChange = onStoreChange,
+                            onSearch = onSearch,
+                            font,
+                        )
                     }
                     Spacer(modifier = Modifier.height(16.dp))
-                    ContentBox(productResponse)
+                    ContentBox(
+                        products = productResponse,
+                        onPageChange = onPageChange,
+                        selectedProducts = selectedProducts,
+                        onProductChecked = { product, checked ->
+                            if (checked) {
+                                selectedProducts[product.store] = product
+                            } else {
+                                selectedProducts.remove(product.store)
+                            }
+                        }
+                    )
                 }
             }
         }

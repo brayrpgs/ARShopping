@@ -39,7 +39,8 @@ fun TextInput(
     input: MutableState<String>,
     isError: Boolean = false,
     supportingText: @Composable (() -> Unit)? = null,
-    showSupportingText: Boolean = false, // <--- nuevo
+    showSupportingText: Boolean = false,
+    modifier: Modifier? = Modifier
 ) {
     val color = if (backgroundColor == styles.colorDarkBackground) Color.White else Color.Black
     var text by remember { input }
@@ -84,9 +85,8 @@ fun TextInput(
                 focusedBorderColor = if (isError) Color.Red else Color.DarkGray,
                 unfocusedBorderColor = if (isError) Color.Red else Color.White
             ),
-            modifier = Modifier
-                .width(303.dp)
-                .height(if (showSupportingText) 75.dp else 63.dp),
+            modifier = modifier
+                !!.width(303.dp),
         )
     }
 }

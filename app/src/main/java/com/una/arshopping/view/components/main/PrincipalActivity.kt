@@ -77,16 +77,35 @@ class PrincipalActivity : ComponentActivity() {
     fun MainScreen(
         productViewModel: ProductViewModel
     ) {
+        val context = LocalContext.current
         /**
          * gets data products by observer pattern
          */
         val productResponse by productViewModel.products.observeAsState()
         val products = productResponse
 
+        var searchQuery by remember { mutableStateOf("") }
+        var searchStore by remember { mutableStateOf("") }
+        var currentPage by remember { mutableIntStateOf(1) }
+
+        fun loadPage(page: Int) {
+            currentPage = page
+            productViewModel.getProductsFiltered(
+                context = context,
+                page = page,
+                query = searchQuery,
+                store = searchStore
+            )
+        }
+
+        LaunchedEffect(Unit) {
+            loadPage(1)
+        }
+
         /**
          * get to local storage theme and set it
          */
-        val context = LocalContext.current
+
         var numberTheme by remember { mutableIntStateOf(gelAllTheme(context)) }
         var colorBackground =
             if (numberTheme == 1 || numberTheme == 0) Styles().colorLightBackground else Styles().colorDarkBackground
@@ -98,7 +117,13 @@ class PrincipalActivity : ComponentActivity() {
                 .fillMaxSize()
         ) {
             MainLayout(
-                productResponse = products
+                productResponse = products,
+                query = searchQuery,
+                onQueryChange = { searchQuery = it },
+                store = searchStore,
+                onStoreChange = { searchStore = it },
+                onSearch = { loadPage(1) },
+                onPageChange = { page -> loadPage(page) }
             )
         }
     }

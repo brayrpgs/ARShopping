@@ -197,7 +197,7 @@ fun Background(styles: Styles, singInViewModel: SingInViewModel) {
             backgroundColor = colorBackground,
             input = password
         )
-
+        Spacer(Modifier.height(10.dp))
         TextInput(
             styles = styles,
             label = "Confirm",
@@ -212,7 +212,7 @@ fun Background(styles: Styles, singInViewModel: SingInViewModel) {
                     Text(
                         text = "Passwords do not match",
                         color = Color.Red,
-                        fontSize = 12.sp,
+                        fontSize = 9.sp,
                         fontFamily = styles.fontFamily
                     )
                 }
