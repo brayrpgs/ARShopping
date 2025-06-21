@@ -73,5 +73,35 @@ class UserViewModel : ViewModel() {
             }
         }
     }
+
+    // Delete the logged in user
+    fun deleteUser(
+        context: Context,
+        onSuccess: () -> Unit,
+        onError: () -> Unit
+    ) {
+        // Implement password change logic here
+        val userLocal = getAllUsers(context)
+        val userOrigin = User(
+            id = userLocal[0].id,
+            email = userLocal[0].email,
+            username = userLocal[0].username,
+            avatarUrl = userLocal[0].avatarUrl,
+        )
+        viewModelScope.launch {
+            try {
+                val updatedUser =
+                    RetrofitInstance.getInstance(context).deleteUser(userOrigin.id)
+                val response = updatedUser.body()?.string()?.contains("true")
+                if (response!!) {
+                    onSuccess()
+                } else {
+                    onError()
+                }
+            } catch (e: Exception) {
+                Log.e("UserViewModel", "Error updating user: ${e.message}")
+            }
+        }
+    }
 }
 

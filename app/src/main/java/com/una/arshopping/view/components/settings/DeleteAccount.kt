@@ -1,5 +1,6 @@
 package com.una.arshopping.view.components.settings
 
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -30,18 +31,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.una.arshopping.R
+import com.una.arshopping.repository.deleteUser
 import com.una.arshopping.styles.Styles
+import com.una.arshopping.view.components.login.LoginActivity
+import com.una.arshopping.viewmodel.UserViewModel
+
 @Composable
 fun DeleteAccount(
     colorContent: Color = Color.Black,
-    backgroundButton: Color = Color(0xBFFF0004)
+    backgroundButton: Color = Color(0xBFFF0004),
+    viewModel: UserViewModel
 ) {
+    val context = LocalContext.current
     var isDelete by remember { mutableStateOf(false) }
     Button(
         onClick = { isDelete = true },
@@ -87,7 +95,7 @@ fun DeleteAccount(
         Column(
             modifier = Modifier
                 .zIndex(2f)
-                .offset(0.dp, 740.dp)
+                .offset(0.dp, 740.dp),
         ) {
             Card(
                 shape = RoundedCornerShape(24.dp),
@@ -106,6 +114,18 @@ fun DeleteAccount(
                 )
                 Button(
                     onClick = {
+                        viewModel.deleteUser(
+                            context = context,
+                            onSuccess = {
+                                isDelete = false
+                                deleteUser(context)
+                                val intent = Intent(context, LoginActivity::class.java)
+                                context.startActivity(intent)
+                            },
+                            onError = {
+                                isDelete = false
+                            }
+                        )
                         isDelete = false
                     },
                     colors = ButtonDefaults.buttonColors(
@@ -117,24 +137,38 @@ fun DeleteAccount(
                         .padding(
                             horizontal = 50.dp
                         )
-                        .height(30.dp)
+                        .height(40.dp),
+                    border = BorderStroke(1.dp, Color.White)
                 ) {
                     Text(
-                        "Delete",
+                        "Delete account",
                         fontFamily = Styles().fontFamily,
                         fontWeight = FontWeight(800),
+                        fontSize = 13.sp
                     )
                 }
                 Button(
                     onClick = {
                         isDelete = false
                     },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFFFFF),
+                        contentColor = Color.Black
+                    ),
+                    border = BorderStroke(1.dp, Color.Black),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 50.dp
+                        )
+                        .height(40.dp),
 
                     ) {
                     Text(
                         "Cancel",
                         fontFamily = Styles().fontFamily,
                         fontWeight = FontWeight(800),
+                        fontSize = 13.sp
                     )
 
                 }
