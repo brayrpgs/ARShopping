@@ -226,8 +226,8 @@ fun Background(styles: Styles, loginViewModel: LoginViewModel) {
         Spacer(Modifier.height(20.dp))
         TextInput(
             styles = styles,
-            label = "User",
-            placeholder = "Enter your user",
+            label = "Email",
+            placeholder = "Enter your Email",
             isPassword = false,
             backgroundColor = colorBackground,
             input = email
