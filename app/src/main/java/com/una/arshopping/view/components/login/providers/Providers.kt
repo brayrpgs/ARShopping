@@ -47,7 +47,7 @@ fun Providers() {
                 deleteUser(context)
                 val intent = Intent(Intent.ACTION_VIEW, "http://10.0.2.2:3000/auth/google".toUri())
                 context.startActivity(intent)
-                (context as? Activity)?.finish()
+                //(context as? Activity)?.finish()
             },
             modifier = Modifier
                 .width(53.dp)
@@ -74,7 +74,7 @@ fun Providers() {
                 deleteUser(context)
                 val intent = Intent(Intent.ACTION_VIEW, "http://10.0.2.2:3000/auth/github".toUri())
                 context.startActivity(intent)
-                (context as? Activity)?.finish()
+                //(context as? Activity)?.finish()
             },
             modifier = Modifier
                 .width(53.dp)
@@ -99,7 +99,7 @@ fun Providers() {
                 deleteUser(context)
                 val intent = Intent(Intent.ACTION_VIEW, "http://10.0.2.2:3000/auth/facebook".toUri())
                 context.startActivity(intent)
-                (context as? Activity)?.finish()
+                //(context as? Activity)?.finish()
             },
             modifier = Modifier
                 .width(53.dp)
