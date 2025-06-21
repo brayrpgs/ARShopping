@@ -32,7 +32,7 @@ interface ApiService {
     @PATCH("users/{id}")
     suspend fun updateUser(@Path("id") id: Int?, @Body userDto: UserUpdateDTO): User
 
-    @GET("/api/products?size=4&page=1"
+    @GET("/api/products?size=4&page=1")
     suspend fun getProducts(): Response<ProductResponse>
 
     @GET("/api/products")
