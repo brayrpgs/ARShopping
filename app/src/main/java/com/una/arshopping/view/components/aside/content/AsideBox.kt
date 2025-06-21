@@ -99,7 +99,7 @@ fun AsideBox() {
                         text = label,
                         iconId = iconId,
                         iconContentDescription = label,
-                        onClick = {action},
+                        onClick = {action()},
                         contentColor = fontColor,
                         modifier = Modifier
                             .fillMaxWidth()

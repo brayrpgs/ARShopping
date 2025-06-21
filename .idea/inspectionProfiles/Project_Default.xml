@@ -51,7 +51,6 @@
     <inspection_tool class="AndroidLintUnusedMaterial3ScaffoldPaddingParameter" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="AndroidLintUnusedTransitionTargetStateParameter" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="AndroidLintUseOfNonLambdaOffsetOverload" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="AndroidLintUsingMaterialAndMaterial3Libraries" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintWrongRequiresOptIn" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="ComposePreviewDimensionRespectsLimit" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="composableFile" value="true" />
