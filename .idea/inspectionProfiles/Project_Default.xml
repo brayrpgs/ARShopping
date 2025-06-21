@@ -23,7 +23,6 @@
     <inspection_tool class="AndroidLintModifierFactoryReturnType" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintModifierFactoryUnreferencedReceiver" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="AndroidLintModifierNodeInspectableProperties" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
-    <inspection_tool class="AndroidLintModifierParameter" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintMultipleAwaitPointerEventScopes" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintMutableCollectionMutableState" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintNoCollectCallFound" enabled="true" level="ERROR" enabled_by_default="true" />

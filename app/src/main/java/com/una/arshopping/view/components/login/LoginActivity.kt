@@ -227,7 +227,7 @@ fun Background(styles: Styles, loginViewModel: LoginViewModel) {
         Spacer(Modifier.height(27.dp))
         ImageCover()
         Spacer(Modifier.height(26.dp))
-        Label(styles, text = "ShoppingAR Engine Search", backgroundColor = colorBackground)
+        Label(styles, text = "Shopping Engine Search", backgroundColor = colorBackground)
         Spacer(Modifier.height(54.dp))
         Label(styles, text = "Log In", backgroundColor = colorBackground)
         Spacer(Modifier.height(6.dp))

@@ -64,7 +64,7 @@ fun AsideBox() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "ShoppingAR",
+                    text = "Shopping Engine Search",
                     style = TextStyle(
                         fontFamily = styles.fontFamily,
                         fontSize = 25.sp,

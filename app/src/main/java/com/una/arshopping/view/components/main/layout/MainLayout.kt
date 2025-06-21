@@ -106,7 +106,7 @@ fun MainLayout(
                     }
 
                     Text(
-                        text = "ShoppingAR Engine Search",
+                        text = "Shopping Engine Search",
                         style = TextStyle(
                             fontSize = 16.sp,
                             lineHeight = 40.sp,
