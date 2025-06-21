@@ -1,5 +1,6 @@
 package com.una.arshopping.view.components.settings
 
+import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,21 +15,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.una.arshopping.R
+import com.una.arshopping.repository.deleteUser
 import com.una.arshopping.styles.Styles
+import androidx.core.net.toUri
 
 @Composable
 fun LoginMethod(
     colorContent: Color = Color.Black,
     textButtons: Color = Color.White,
     backgroundButtons: Color = Color.Black,
-    onclickFacebook: () -> Unit = {},
-    onclickGoogle: () -> Unit = {},
-    onclickGithub: () -> Unit = {},
 ) {
+    val context = LocalContext.current
     Text(
         text = "Add new login method ",
         fontSize = 22.sp,
@@ -39,7 +41,11 @@ fun LoginMethod(
     )
 
     Button(
-        onClick = { onclickFacebook },
+        onClick = {
+            deleteUser(context)
+            val intent = Intent(Intent.ACTION_VIEW, "http://10.0.2.2:3000/auth/facebook".toUri())
+            context.startActivity(intent)
+        },
         modifier = Modifier
             .offset(0.dp, 235.dp)
             .fillMaxWidth()
@@ -69,7 +75,11 @@ fun LoginMethod(
     }
 
     Button(
-        onClick = { onclickGithub },
+        onClick = {
+            deleteUser(context)
+            val intent = Intent(Intent.ACTION_VIEW, "http://10.0.2.2:3000/auth/github".toUri())
+            context.startActivity(intent)
+        },
         modifier = Modifier
             .offset(0.dp, 295.dp)
             .fillMaxWidth()
@@ -100,7 +110,11 @@ fun LoginMethod(
     }
 
     Button(
-        onClick = { onclickGoogle },
+        onClick = {
+            deleteUser(context)
+            val intent = Intent(Intent.ACTION_VIEW, "http://10.0.2.2:3000/auth/google".toUri())
+            context.startActivity(intent)
+        },
         modifier = Modifier
             .offset(0.dp, 355.dp)
             .fillMaxWidth()

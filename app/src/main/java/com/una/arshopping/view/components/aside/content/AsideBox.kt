@@ -28,6 +28,7 @@ import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.aside.button.Button
 import com.una.arshopping.view.components.myprofile.MyProfileActivity
 import com.una.arshopping.view.components.preferences.PreferencesActivity
+import com.una.arshopping.view.components.settings.SettingsActivity
 
 @Composable
 fun AsideBox() {
@@ -82,7 +83,8 @@ fun AsideBox() {
                         context.startActivity(intent)
                     },
                     Triple("Settings", R.drawable.settings) {
-
+                        val intent = Intent(context, SettingsActivity::class.java)
+                        context.startActivity(intent)
                     }
                 )
 
