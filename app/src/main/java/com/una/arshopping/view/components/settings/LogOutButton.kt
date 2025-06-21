@@ -1,5 +1,6 @@
 package com.una.arshopping.view.components.settings
 
+import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -16,20 +17,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.una.arshopping.R
+import com.una.arshopping.repository.deleteUser
 import com.una.arshopping.styles.Styles
+import com.una.arshopping.view.components.login.LoginActivity
 
 @Composable
 fun LogOutButton(
     colorContent: Color = Color.Black,
     backgroundButton: Color = Color(0x80FFFFFF)
 ) {
-
+    val context = LocalContext.current
     Button(
-        onClick = {},
+        onClick = {
+            deleteUser(context)
+            val intent = Intent(context, LoginActivity::class.java)
+            context.startActivity(intent)
+        },
         modifier = Modifier
             .offset(0.dp, 600.dp)
             .fillMaxWidth()
