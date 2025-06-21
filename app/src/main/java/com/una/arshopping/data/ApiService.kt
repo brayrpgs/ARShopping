@@ -18,7 +18,6 @@ import retrofit2.http.POST
 import retrofit2.http.PATCH
 import retrofit2.http.Path
 import retrofit2.http.Query
-import retrofit2.http.Query
 
 interface ApiService {
     @POST("/api/users")
@@ -42,8 +41,6 @@ interface ApiService {
         @Query("email") email: String
     ): Response<UserResponse>
     @GET("/api/products?size=9&page=1")
-
-    @GET("/api/products?size=4&page=1")
     suspend fun getProducts(): Response<ProductResponse>
     @POST("/api/users/recovery-password")
     suspend fun requestOTP(@Body user: UserOTPRequest): Response<ResponseBody>
