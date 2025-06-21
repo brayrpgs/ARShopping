@@ -102,7 +102,7 @@ fun LoginMethod(
             modifier = Modifier
                 .padding(horizontal = 0.dp)
                 .offset(-(15.dp), 0.dp),
-            colorFilter = ColorFilter.tint(Color.White),
+            colorFilter = ColorFilter.tint(colorContent),
         )
         Text(
             text = "Connect with GitHub  ",
