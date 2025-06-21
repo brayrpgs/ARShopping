@@ -1,5 +1,6 @@
 package com.una.arshopping.view.components.settings
 
+import android.app.Activity
 import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -37,6 +38,7 @@ fun LogOutButton(
             deleteUser(context)
             val intent = Intent(context, LoginActivity::class.java)
             context.startActivity(intent)
+            (context as? Activity)?.finish()
         },
         modifier = Modifier
             .offset(0.dp, 600.dp)

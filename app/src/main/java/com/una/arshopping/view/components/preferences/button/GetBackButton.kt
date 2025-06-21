@@ -1,4 +1,5 @@
 package com.una.arshopping.view.components.preferences.button
+import android.app.Activity
 import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +31,7 @@ fun GetBackButton(
             onClick = {
                 val intent = Intent(context, PrincipalActivity::class.java)
                 context.startActivity(intent)
+                (context as? Activity)?.finish()
             },
             modifier = Modifier
                 .size(30.dp)

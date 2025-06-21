@@ -2,7 +2,6 @@ package com.una.arshopping.view.components.myprofile
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -24,25 +23,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.una.arshopping.common.*
-import com.una.arshopping.repository.deleteUser
 import com.una.arshopping.repository.getAllUsers
 import com.una.arshopping.repository.gelAllTheme
-import com.una.arshopping.repository.insertTheme
-import com.una.arshopping.repository.updateTheme
 import com.una.arshopping.styles.Styles
 import com.una.arshopping.view.components.alerts.CustomNotificationSnackbar
 import com.una.arshopping.view.components.login.LoginActivity
-import com.una.arshopping.view.components.main.PrincipalActivity
 import com.una.arshopping.view.components.main.ui.theme.ARShoppingTheme
 import com.una.arshopping.view.components.myprofile.avatarpicker.AvatarSection
 import com.una.arshopping.view.components.myprofile.button.ActionButtons
 import com.una.arshopping.view.components.myprofile.form.InputField
 import com.una.arshopping.view.components.preferences.button.GetBackButton
-import com.una.arshopping.view.components.login.themeschema.ThemeSchema
-import com.una.arshopping.viewmodel.SingInViewModel
 import com.una.arshopping.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 
@@ -51,6 +42,9 @@ import kotlinx.coroutines.launch
  * and injects it into the Composable screen.
  */
 class MyProfileActivity : ComponentActivity() {
+    override fun onDestroy() {
+        super.onDestroy()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel = UserViewModel()
@@ -96,7 +90,7 @@ fun MyProfileScreen(
 
     // Theme handling
     val context = LocalContext.current
-    var theme by remember { mutableStateOf(gelAllTheme(context)) }
+    var theme by remember { mutableIntStateOf(gelAllTheme(context)) }
     var colorBackground by remember { mutableStateOf(styles.colorLightBackground) }
 
     // Set initial theme

@@ -127,6 +127,10 @@ class PrincipalActivity : ComponentActivity() {
             )
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }
 
 

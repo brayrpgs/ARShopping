@@ -1,5 +1,6 @@
 package com.una.arshopping.view.components.settings
 
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -137,6 +138,7 @@ fun ChangePassword(
                     deleteUser(context)
                     val intent = Intent(context, LoginActivity::class.java)
                     context.startActivity(intent)
+                    (context as? Activity)?.finish()
                 }
             },
             title = { Text(text = "Change Password") },
@@ -149,6 +151,7 @@ fun ChangePassword(
                             deleteUser(context)
                             val intent = Intent(context, LoginActivity::class.java)
                             context.startActivity(intent)
+                            (context as? Activity)?.finish()
                         }
                     },
                     colors = ButtonDefaults.buttonColors(
@@ -167,6 +170,7 @@ fun ChangePassword(
                             deleteUser(context)
                             val intent = Intent(context, LoginActivity::class.java)
                             context.startActivity(intent)
+                            (context as? Activity)?.finish()
                         }
                     },
                     colors = ButtonDefaults.buttonColors(

@@ -28,15 +28,17 @@ import com.una.arshopping.viewmodel.RecoverPasswordViewModel
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import com.una.arshopping.view.components.login.LoginActivity
-import com.una.arshopping.view.components.preferences.button.GetBackButton
 import com.una.arshopping.view.components.singin.ButtonNormal
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
-import com.una.arshopping.view.components.main.PrincipalActivity
 import com.una.arshopping.view.components.recover_password.button.GoBackButton
 
 class RecoverPasswordOTPActivity : ComponentActivity() {
     private lateinit var recoverPasswordViewModel: RecoverPasswordViewModel
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +57,7 @@ class RecoverPasswordOTPActivity : ComponentActivity() {
                         dialog.dismiss()
                         val intent = Intent(this, LoginActivity::class.java)
                         startActivity(intent)
+                        finish()
                     }
                     builder.create().show()
                 }

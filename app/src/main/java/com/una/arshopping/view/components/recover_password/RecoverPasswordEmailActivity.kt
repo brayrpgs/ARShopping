@@ -44,6 +44,7 @@ class RecoverPasswordEmailActivity : ComponentActivity() {
                     val intent = Intent(this, RecoverPasswordOTPActivity::class.java)
                     intent.putExtra("email", recoverPasswordViewModel.email.value)
                     startActivity(intent)
+                    finish()
                 }
                 is RecoverPasswordViewModel.SendOTPResult.Error -> {
                     val builder = AlertDialog.Builder(this)

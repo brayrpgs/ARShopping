@@ -176,7 +176,7 @@ fun MainLayout(
                 .fillMaxSize(),
             contentAlignment = Alignment.BottomCenter
         ) {
-            CompareButton(font = Styles().fontFamily)
+            CompareButton()
         }
     }
 

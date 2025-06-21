@@ -1,5 +1,6 @@
 package com.una.arshopping.view.components.aside.content
 
+import android.app.Activity
 import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -77,14 +78,17 @@ fun AsideBox() {
                     Triple("My profile", R.drawable.account_circle) {
                         val intent = Intent(context, MyProfileActivity::class.java)
                         context.startActivity(intent)
+                        (context as? Activity)?.finish()
                     },
                     Triple("Preferences", R.drawable.preferences) {
                         val intent = Intent(context, PreferencesActivity::class.java)
                         context.startActivity(intent)
+                        (context as? Activity)?.finish()
                     },
                     Triple("Settings", R.drawable.settings) {
                         val intent = Intent(context, SettingsActivity::class.java)
                         context.startActivity(intent)
+                        (context as? Activity)?.finish()
                     }
                 )
 
@@ -95,7 +99,7 @@ fun AsideBox() {
                         text = label,
                         iconId = iconId,
                         iconContentDescription = label,
-                        onClick = action,
+                        onClick = {action},
                         contentColor = fontColor,
                         modifier = Modifier
                             .fillMaxWidth()

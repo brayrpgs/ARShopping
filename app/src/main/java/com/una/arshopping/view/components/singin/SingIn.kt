@@ -71,6 +71,7 @@ class SingIn() : ComponentActivity() {
                     dialog.dismiss()
                     val intent = Intent(this, PrincipalActivity::class.java)
                     this.startActivity(intent)
+                    finish()
                 }
                 val dialog = builder.create()
                 dialog.show()
@@ -90,6 +91,10 @@ class SingIn() : ComponentActivity() {
         setContent {
             Background(styles, singInViewModel)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }
 
